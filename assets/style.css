@@ -16,7 +16,11 @@ a{color:var(--deep)}
 a:focus-visible,button:focus-visible{outline:3px solid var(--sage);outline-offset:3px;border-radius:6px}
 .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--gutter)}
 h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.6;text-wrap:balance;margin:0;letter-spacing:.08em}
-p{margin:0}
+p{margin:0;text-wrap:pretty}
+/* 改行は文節で（公開時に tools/wrap_ja.py が <wbr> を入れる）。<wbr> の無い文（GAS から読む名前など）は、はみ出すときだけ折る */
+body{word-break:keep-all;overflow-wrap:anywhere;line-break:strict}
+@supports (word-break:auto-phrase){body{word-break:auto-phrase}}
+input,textarea,select{word-break:normal}
 .nb{display:inline-block}
 
 /* ---------- ヘッダー ---------- */
