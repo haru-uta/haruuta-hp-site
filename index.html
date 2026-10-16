@@ -11,7 +11,7 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Zen+Old+Mincho:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Zen+Old+Mincho:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -34,31 +34,27 @@
 
 <main id="top">
   <section class="hero">
-    <img class="hero-art" src="assets/img/hero_sea.webp" alt="看護師とご利用者さんが海沿いの松林の道を並んで歩く水彩画" width="1920" height="1072" fetchpriority="high">
-    <div class="hero-copy">
-      <div class="wrap">
-        <div class="inner">
-          <h1>「したい」を形に</h1>
-          <p class="sub">オーダーメイドの生き方支援</p>
-          <p class="lead"><span class="nb">福岡県糟屋郡新宮町を拠点とした、</span><span class="nb">こころのケアが得意な</span><span class="nb">訪問看護ステーションです</span></p>
-          <div class="btns"><a class="btn main" href="#first">はじめての方へ</a><a class="btn sub" href="#access">ご相談・お問い合わせ</a></div>
-        </div>
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <h1>「したい」を形に</h1>
+        <p class="sub">オーダーメイドの生き方支援</p>
+        <p class="lead"><span class="nb">福岡県糟屋郡新宮町を拠点とした、</span><span class="nb">こころのケアが得意な</span><span class="nb">訪問看護ステーションです</span></p>
+        <div class="btns"><a class="btn main" href="#first">はじめての方へ</a><a class="btn sub" href="#access">ご相談・お問い合わせ</a></div>
       </div>
-    </div>
-  </section>
-
-  <section class="block tint" id="movie">
-    <div class="wrap">
-      <div class="sec-head"><span class="en">MOVIE</span><h2>はるうたの紹介</h2></div>
-      <div class="movie">
+      <div class="hero-movie">
         <div class="frame">
-          <iframe src="https://www.youtube-nocookie.com/embed/6pCCk3XAME0?rel=0&amp;playsinline=1&amp;mute=1&amp;autoplay=1&amp;loop=1&amp;playlist=6pCCk3XAME0" title="訪問看護ステーションはるうた 紹介動画" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe src="https://www.youtube-nocookie.com/embed/6pCCk3XAME0?rel=0&amp;playsinline=1&amp;mute=1&amp;autoplay=1&amp;loop=1&amp;controls=0&amp;playlist=6pCCk3XAME0" title="訪問看護ステーションはるうた 紹介動画" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="block" id="about">
+  <section class="band">
+    <img src="assets/img/hero_sea.webp" alt="看護師とご利用者さんが海沿いの松林の道を並んで歩く水彩画" width="1920" height="1072" loading="lazy">
+    <p class="band-copy"><span class="nb">私たちが時間をかけて</span><span class="nb">寄り添います</span></p>
+  </section>
+
+  <section class="block leaf-tr" id="about">
     <div class="wrap two">
       <div class="art"><img src="assets/img/about_talk.webp" alt="ご自宅のテーブルで看護師とご利用者さんがお茶を飲みながら話している水彩画" width="1100" height="821" loading="lazy"></div>
       <div class="prose">
@@ -66,12 +62,11 @@
         <p>はるうたでは、専門的視点を持ちながらも『その人らしい生き方』を常に尊重します。</p>
         <p>ご利用者・ご家族様の声に耳を傾け、こうしたい、こうなりたいという意思を大切に、生活のステップアップに必要な支援を考えていきます。</p>
         <p>お一人お一人に合わせたオーダーメイドの生き方支援をしておりますが、いつかはご自身で作り上げていくことも目標に…</p>
-        <p class="catchline">私たちが時間をかけて寄り添います</p>
-      </div>
+              </div>
     </div>
   </section>
 
-  <section class="block wash" id="worries">
+  <section class="block wash leaf-bl" id="worries">
     <div class="wrap">
       <div class="sec-head"><span class="en">WORRIES</span><h2><span class="nb">このようなお悩み</span><span class="nb">ありませんか？</span></h2></div>
       <div class="two rev">
@@ -104,7 +99,7 @@
     </div>
   </section>
 
-  <section class="block" id="service">
+  <section class="block leaf-tr" id="service">
     <div class="wrap">
       <div class="sec-head"><span class="en">SERVICE</span><h2>はるうたの訪問看護</h2></div>
       <div class="services">
@@ -148,7 +143,7 @@
     </div>
   </section>
 
-  <section class="block tint" id="area">
+  <section class="block tint leaf-bl" id="area">
     <div class="wrap">
       <div class="sec-head"><span class="en">AREA</span><h2>サポート対象エリア</h2></div>
       <figure class="area-map"><img src="assets/img/area_map.webp" alt="福岡県の地図。対象エリアが濃い緑で示されている" width="760" height="771" loading="lazy"><figcaption>地図の濃い緑の地域が対象エリアです</figcaption></figure>
@@ -166,7 +161,7 @@
     </div>
   </section>
 
-  <section class="block wash" id="access">
+  <section class="block wash leaf-tr" id="access">
     <div class="wrap">
       <div class="sec-head"><span class="en">ACCESS</span><h2>アクセス・お問い合わせ</h2></div>
       <div class="overview">
