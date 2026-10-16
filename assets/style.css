@@ -195,7 +195,7 @@ dl.facts dd{min-width:0;overflow-wrap:anywhere}
   .site-head .wrap{min-height:70px}
   .brand img{width:46px}
   .brand b{font-size:1.1rem}
-  .brand small{font-size:.58rem;letter-spacing:.04em}
+  .brand small{display:none}
   .brand{min-width:0;flex:1 1 auto}
   .btn{padding:13px 22px;letter-spacing:.06em}
   .services{grid-template-columns:1fr}
