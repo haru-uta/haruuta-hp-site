@@ -25,7 +25,8 @@
   function fmtDate(s) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? m[1] + '年' + Number(m[2]) + '月' + Number(m[3]) + '日' : ''; }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function render(data, live) {
-    if (!data || !data.ok || !data.items) return false;
+    // 0件は「シートが途中で空になった」可能性が高いので、保存済みの一覧に任せる
+    if (!data || !data.ok || !data.items || !data.items.length) return false;
     list.textContent = '';
     var groups = {}, order = (data.categories || []).slice();
     data.items.forEach(function (p) {
