@@ -394,6 +394,7 @@ details.qa[open] summary::after{content:"−"}
   .two.rev .art{order:0}
 }
 @media (max-width:480px){
+  .site-foot .fb b{font-size:1rem;letter-spacing:.06em;white-space:nowrap}
   body{font-size:15.5px}
   .site-head .wrap{min-height:70px}
   .brand img{width:46px}
