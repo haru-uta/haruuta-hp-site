@@ -122,8 +122,24 @@ section.block > .wrap{position:relative;z-index:1}
 .badge{display:inline-block;font-size:.8rem;letter-spacing:.14em;color:var(--white);background:var(--sage);border-radius:999px;padding:4px 14px;justify-self:start}
 
 /* エリア */
-.area-map{max-width:420px;margin:0 auto}
+.area-map{max-width:600px;margin:0 auto}
 .area-map figcaption{text-align:center;color:var(--muted);font-size:.9rem;margin-top:10px}
+.area-svg{display:block;width:100%;height:auto;border-radius:28px;border:1px solid var(--line);background:#e6eff0}
+.area-svg .sea{fill:#e6eff0}
+.area-svg .land path{fill:#f6f5ef;stroke:#d9dccf;stroke-width:1}
+.area-svg .land-out path{fill:#f1f0e8;stroke:#d9dccf;stroke-width:1}
+.area-svg .land-in path{fill:#a9cbb3;stroke:#fbfcfa;stroke-width:1.6;fill-opacity:.92}
+.area-svg text{font-family:var(--body);font-weight:500;text-anchor:middle;paint-order:stroke;stroke:#fbfcfa;stroke-width:5px;stroke-linejoin:round;letter-spacing:.04em}
+.area-svg .town{font-size:21px;fill:#2f5444}
+.area-svg .ward{font-size:11px;fill:#3f6b58}
+.area-svg .city{font-size:27px;fill:#2f5444;font-family:var(--display)}
+.area-svg .out{font-size:16px;fill:#8a958e}
+.area-svg .sea-name{font-size:22px;fill:#7b9aa3;font-family:var(--display);letter-spacing:.4em;stroke:none}
+.area-svg .office circle{fill:#c96f5b;stroke:#fff;stroke-width:3}
+.area-svg .office text{font-size:19px;fill:#9a4a39;text-anchor:start}
+.area-list{list-style:none;margin:22px auto 0;padding:0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:760px}
+.area-list li{background:var(--white);border:1px solid var(--sage);color:var(--deep);border-radius:999px;padding:4px 14px;font-size:.92rem}
+.area-src{text-align:center;font-size:.72rem;color:var(--muted);margin-top:14px}
 
 /* お知らせ */
 .news{list-style:none;margin:0 auto;padding:0;max-width:820px;display:grid;background:var(--white);border-radius:24px;padding-inline:28px;border:1px solid var(--line)}
