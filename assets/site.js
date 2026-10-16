@@ -35,6 +35,41 @@
     });
   }
 
+  // スタッフ紹介（staff.html だけ）。名前と似顔絵はスプレッドシートとドライブにあり、GAS から読む。
+  var staffBox = document.getElementById('staff');
+  if (staffBox) {
+    var SURL = staffBox.getAttribute('data-src');
+    var intro = document.getElementById('staff-intro');
+    var mk = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+    var DEPT_TITLE = { '代表': '', '看護': '看護師', 'リハビリ': 'リハビリ（作業療法士）', '事務': '事務' };
+    fetch(SURL + '?type=staff', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.ok || !d.items || !d.items.length) throw new Error('empty');
+      intro.textContent = d.intro || '';
+      var groups = {};
+      d.items.forEach(function (p) { (groups[p.dept] = groups[p.dept] || []).push(p); });
+      (d.depts || Object.keys(groups)).forEach(function (dep) {
+        if (!groups[dep]) return;
+        var sec = mk('section', 'staff-group');
+        if (DEPT_TITLE[dep]) sec.appendChild(mk('h2', null, DEPT_TITLE[dep]));
+        var grid = mk('div', 'staff-grid');
+        groups[dep].forEach(function (p) {
+          var card = mk('article', 'staff-card');
+          var ph = mk('div', 'ph'); card.appendChild(ph);
+          card.appendChild(mk('span', 'role', p.role));
+          card.appendChild(mk('span', 'nm', p.name));
+          if (p.roma) card.appendChild(mk('span', 'rm', p.roma));
+          if (p.comment) card.appendChild(mk('p', 'cm', p.comment));
+          grid.appendChild(card);
+          if (p.photo) fetch(SURL + '?photo=' + encodeURIComponent(p.photo)).then(function (r) { return r.json(); }).then(function (x) {
+            if (x && x.ok && /^data:image\//.test(x.data)) { var im = mk('img'); im.alt = p.name + 'さんの似顔絵'; im.src = x.data; ph.appendChild(im); }
+          }).catch(function () {});
+        });
+        sec.appendChild(grid);
+        staffBox.appendChild(sec);
+      });
+    }).catch(function () { intro.textContent = 'スタッフ紹介を読み込めませんでした。時間をおいて、もう一度お試しください。'; });
+  }
+
   // 連携機関の掲示（renkei.html だけ）。スプレッドシート（GAS）から最新を読み、だめなら保存済みの一覧を出す。
   var list = document.getElementById('partners');
   if (!list) return;
