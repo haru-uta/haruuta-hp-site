@@ -17,6 +17,24 @@
     });
   });
 
+  // よくある質問の絞り込み（qa.html だけ）
+  var qbox = document.getElementById('qa-q');
+  if (qbox) {
+    var count = document.getElementById('qa-count');
+    qbox.addEventListener('input', function () {
+      var w = qbox.value.trim(), shown = 0;
+      document.querySelectorAll('.qa-group').forEach(function (g) {
+        var any = false;
+        g.querySelectorAll('details.qa').forEach(function (d) {
+          var hit = !w || d.textContent.indexOf(w) >= 0;
+          d.hidden = !hit; if (hit) { any = true; shown++; if (w) d.open = true; }
+        });
+        g.hidden = !any;
+      });
+      count.textContent = w ? '「' + w + '」に合う質問 ' + shown + ' 件' : shown + ' 件の質問';
+    });
+  }
+
   // 連携機関の掲示（renkei.html だけ）。スプレッドシート（GAS）から最新を読み、だめなら保存済みの一覧を出す。
   var list = document.getElementById('partners');
   if (!list) return;

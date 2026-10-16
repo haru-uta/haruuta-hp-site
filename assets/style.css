@@ -46,7 +46,7 @@ p{margin:0}
 .hero .lead{font-size:.95rem;color:var(--muted)}
 .hero .btns{justify-content:flex-start}
 .hero-movie .frame{position:relative;aspect-ratio:16/9;border-radius:28px;overflow:hidden;background:#e3ece6;box-shadow:0 24px 60px rgba(47,84,68,.16);outline:10px solid rgba(255,255,255,.7)}
-.hero-movie iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.hero-movie iframe,.hero-movie img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
 
 /* 絵の帯 */
 .band{position:relative;margin:0}
@@ -170,6 +170,29 @@ dl.facts dd{min-width:0;overflow-wrap:anywhere}
 .partners .p-kind{font-size:.85rem;color:var(--deep);background:var(--sage-soft);border-radius:6px;padding:1px 8px;justify-self:start}
 .partners .p-addr{font-size:.9rem;color:var(--muted);overflow-wrap:anywhere}
 .fine{font-size:.9rem;color:var(--muted);display:grid;gap:4px}
+
+/* ---------- よくある質問 ---------- */
+.qa-page .wrap{max-width:900px}
+.qa-tools{display:grid;gap:16px;margin-bottom:48px}
+.qa-search{display:grid;gap:6px;font-size:.9rem;color:var(--muted)}
+.qa-search input{font:inherit;font-size:1rem;padding:14px 18px;border-radius:999px;border:1px solid var(--line);background:var(--white);color:var(--ink)}
+.qa-chips{display:flex;flex-wrap:wrap;gap:8px}
+.qa-chip{font-size:.88rem;text-decoration:none;color:var(--deep);background:var(--sage-soft);border-radius:999px;padding:6px 16px}
+.qa-chip:hover{background:#dde9e0}
+.qa-count{font-size:.85rem;color:var(--muted)}
+.qa-group{display:grid;gap:12px;margin-bottom:56px;scroll-margin-top:110px}
+.qa-group h2{font-size:1.3rem;color:var(--deep);padding-bottom:10px;border-bottom:1px solid var(--line)}
+details.qa{background:var(--white);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+details.qa summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:18px 20px;font-weight:500;line-height:1.7}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa summary::after{content:"+";font-size:1.4rem;color:var(--sage);line-height:1}
+details.qa[open] summary::after{content:"−"}
+.qa .q{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--sage);color:var(--white);font-family:var(--display);font-size:1rem}
+.qa .a{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:0 20px 20px;color:var(--ink)}
+.qa .a > div{display:grid;gap:.8em;min-width:0}
+.qa .a-mark{background:var(--blush);color:#9a5b52}
+.qa-call{margin-top:24px}
+.qa-group[hidden],details.qa[hidden]{display:none}
 
 /* ---------- 画面の幅ごと ---------- */
 @media (max-width:1060px){
