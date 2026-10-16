@@ -520,3 +520,12 @@ details.qa[open] summary::after{content:"−"}
 .rc-flow span{font-size:.92rem}
 .rc-soon{font-style:normal;font-size:.75rem;background:var(--blush);color:#8a4b3f;border-radius:999px;padding:2px 10px;margin-left:6px;white-space:nowrap}
 .rc-sys.wide img{max-height:460px;object-fit:cover;object-position:top}
+
+/* ---------- お知らせ（news.html・news-*.html） ---------- */
+.news-post p{line-height:2}
+.news-meta{display:flex;gap:14px;align-items:center;color:var(--muted);font-size:.9rem}
+.news-meta .tag,.news .tag{font-size:.78rem}
+.news-figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
+.news-figs figure{margin:0}
+.news-figs img{border-radius:14px;width:100%}
+.news-back,.news-more{margin-top:28px}
