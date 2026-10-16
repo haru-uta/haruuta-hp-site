@@ -76,11 +76,20 @@
       update();
     });
     update();
+    // 面談の希望日は明日以降だけ選べるようにする
+    // 日本時間の「明日」（端末の時計の地域に左右されないように UTC＋9時間で数える）
+    var tm = new Date(Date.now() + 9 * 3600e3 + 864e5), pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    cf.querySelectorAll('.slot-d').forEach(function (d) { d.min = tm.getUTCFullYear() + '-' + pad(tm.getUTCMonth() + 1) + '-' + pad(tm.getUTCDate()); });
+    var getSlots = function () {
+      var out = [];
+      cf.querySelectorAll('.slot').forEach(function (r) { var d = r.querySelector('.slot-d').value; if (d) out.push({ date: d, part: r.querySelector('.slot-p').value }); });
+      return out;
+    };
     cf.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var g = function (id) { return document.getElementById(id).value; };
       var data = { who: picked('who'), name: g('c-name'), kana: g('c-kana'), email: g('c-email'), tel: g('c-tel'), kind: picked('kind'),
-        message: g('c-msg'), pref: picked('pref'), time: g('c-time'), source: picked('source'),
+        message: g('c-msg'), pref: picked('pref'), time: g('c-time'), slots: getSlots(), source: picked('source'),
         website: g('c-web'), agree: document.getElementById('c-agree').checked, ticket: ticket, requestId: requestId };
       var miss = [];
       if (!data.who) miss.push('どなたからのご相談かを選んでください');
@@ -102,8 +111,8 @@
           var known = new Error(msg); known.known = true; throw known;
         })
         .catch(function (e) {
-          // 通信が切れたときは届いたか分からない。送信番号は同じままなので、押し直しても二重には届かない
-          errBox.textContent = (e && e.known) ? e.message : '通信が途切れ、送信できたか確かめられませんでした。もう一度「この内容で送信する」を押してください（二重に届くことはありません）。\nつながらない場合は、お電話（092-410-6392）でご連絡ください。';
+          // 通信が切れたときは届いたか分からない。送信番号は同じままなので、押し直しても記録シートで見分けて二重にしない
+          errBox.textContent = (e && e.known) ? e.message : '通信が途切れ、送信できたか確かめられませんでした。もう一度「この内容で送信する」を押してください（同じ内容が二重に届かないようにしています）。\nつながらない場合は、お電話（092-410-6392）でご連絡ください。';
           errBox.hidden = false; sub.disabled = false; sub.textContent = 'この内容で送信する';
         });
     });
