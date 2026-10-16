@@ -27,7 +27,7 @@ input,textarea,select{word-break:normal}
 .site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(251,252,250,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .site-head .wrap{display:flex;align-items:center;gap:18px;min-height:84px;position:relative}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);flex:0 0 auto}
-.brand img{width:58px;height:auto}
+.brand img{width:58px;height:auto;aspect-ratio:1}
 .brand .bt{display:grid;line-height:1.35}
 .brand small{font-size:.66rem;color:var(--muted);letter-spacing:.12em}
 .brand b{font-family:var(--display);font-size:1.3rem;letter-spacing:.14em;font-weight:700}
