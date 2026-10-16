@@ -76,6 +76,10 @@
       update();
     });
     update();
+    // contact.html?who=work のように来たら「どなたから」を先に選んでおく（採用ページから）
+    var preWho = (location.search.match(/[?&]who=(\w+)/) || [])[1];
+    var preEl = preWho && cf.querySelector('input[name=who][data-who="' + preWho + '"]');
+    if (preEl) { preEl.checked = true; preEl.dispatchEvent(new Event('change', { bubbles: true })); }
     // 面談の希望日は明日以降だけ選べるようにする
     // 日本時間の「明日」（端末の時計の地域に左右されないように UTC＋9時間で数える）
     var tm = new Date(Date.now() + 9 * 3600e3 + 864e5), pad = function (n) { return (n < 10 ? '0' : '') + n; };

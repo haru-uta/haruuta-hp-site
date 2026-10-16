@@ -456,3 +456,23 @@ details.qa[open] summary::after{content:"−"}
   .fp-body{padding:16px 16px}
   .fp-tabs button{flex:1 1 100%}
 }
+.fp-cancel{text-align:center;font-size:.95rem;color:var(--muted);margin-top:18px}
+
+/* ---------- 採用情報（recruit.html） ---------- */
+.rc-card{background:var(--white);border:1px solid var(--line);border-radius:28px;padding:28px clamp(18px,4vw,40px);display:grid;gap:16px;max-width:900px;margin:0 auto}
+.rc-mt{margin-top:28px}
+.rc-h{font-size:1.15rem;color:var(--deep);padding-bottom:6px;border-bottom:2px solid var(--sage-soft)}
+.rc-list{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.rc-list li{position:relative;padding-left:1.4em;line-height:1.9}
+.rc-list li::before{content:"";position:absolute;left:.2em;top:.75em;width:.55em;height:.55em;border-radius:50%;background:var(--sage)}
+.rc-list small{display:block;font-size:.85rem;color:var(--muted)}
+.rc-pay{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto}
+.rc-paycard{background:var(--white) url(watercolor.jpg) center/cover;border:1px solid var(--line);border-radius:24px;padding:24px;display:grid;gap:10px}
+.rc-paycard h3{font-size:1.2rem;color:var(--deep);text-align:center}
+.rc-paycard dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:baseline}
+.rc-paycard dt{color:var(--muted);font-size:.9rem}
+.rc-paycard dd{margin:0;font-family:var(--display);font-size:1.35rem;color:var(--deep);text-align:right}
+.rc-perks{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px}
+.rc-perk{background:var(--white);border-radius:22px;padding:22px 24px;display:grid;gap:12px;align-content:start}
+.rc-perk h3{font-size:1.1rem;color:var(--deep)}
+@media (max-width:820px){ .rc-pay{grid-template-columns:1fr} }
