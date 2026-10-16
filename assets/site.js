@@ -17,6 +17,47 @@
     });
   });
 
+  // お問い合わせ（contact.html だけ）。GAS の doPost へ送り、メールで届く。
+  var cf = document.getElementById('contact-form');
+  if (cf) {
+    var ticket = '', SRC = cf.getAttribute('data-src');
+    var newId = function () { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + '-' + Math.random().toString(36).slice(2, 12); };
+    var requestId = newId();
+    var getTicket = function () { return fetch(SRC + '?type=form', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (x) { if (x && x.ok) ticket = x.ticket; }).catch(function () {}); };
+    getTicket();
+    var errBox = document.getElementById('c-error'), sub = document.getElementById('c-submit');
+    cf.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var g = function (id) { return document.getElementById(id).value; };
+      var kindEl = cf.querySelector('input[name=kind]:checked');
+      var data = { name: g('c-name'), kana: g('c-kana'), email: g('c-email'), tel: g('c-tel'), kind: kindEl ? kindEl.value : '',
+        message: g('c-msg'), website: g('c-web'), agree: document.getElementById('c-agree').checked, ticket: ticket, requestId: requestId };
+      var miss = [];
+      if (!data.name.trim()) miss.push('お名前を入れてください');
+      if (!data.kana.trim()) miss.push('ふりがなを入れてください');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) miss.push('メールアドレスの形を確かめてください');
+      if (data.tel.replace(/\D/g, '').length < 10) miss.push('電話番号を確かめてください');
+      if (!data.kind) miss.push('お問い合わせの種類を選んでください');
+      if (!data.message.trim()) miss.push('お問い合わせ内容を入れてください');
+      if (!data.agree) miss.push('個人情報保護方針への同意が必要です');
+      if (miss.length) { errBox.textContent = miss.join('\n'); errBox.hidden = false; return; }
+      errBox.hidden = true; sub.disabled = true; sub.textContent = '送信しています…';
+      fetch(SRC, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.ok) { cf.reset(); cf.hidden = true; document.getElementById('contact-done').hidden = false; window.scrollTo(0, 0); return; }
+          var msg = (res && res.errors || []).join('\n') || '送信できませんでした';
+          if (/開き直して|もう一度/.test(msg)) getTicket();
+          var known = new Error(msg); known.known = true; throw known;
+        })
+        .catch(function (e) {
+          // 通信が切れたときは届いたか分からない。送信番号は同じままなので、押し直しても二重には届かない
+          errBox.textContent = (e && e.known) ? e.message : '通信が途切れ、送信できたか確かめられませんでした。もう一度「この内容で送信する」を押してください（二重に届くことはありません）。\nつながらない場合は、お電話（092-410-6392）でご連絡ください。';
+          errBox.hidden = false; sub.disabled = false; sub.textContent = 'この内容で送信する';
+        });
+    });
+  }
+
   // よくある質問の絞り込み（qa.html だけ）
   var qbox = document.getElementById('qa-q');
   if (qbox) {
