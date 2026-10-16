@@ -171,6 +171,38 @@
     }).catch(function () { intro.textContent = 'スタッフ紹介を読み込めませんでした。時間をおいて、もう一度お試しください。'; });
   }
 
+  // ご利用の流れと料金（flow-price.html だけ）: 受給者証のタブと、自立支援医療の目安
+  var tabs = document.querySelectorAll('.fp-tabs [role="tab"]');
+  if (tabs.length) {
+    var pick = function (t, focus) {
+      tabs.forEach(function (x) {
+        var on = x === t;
+        x.setAttribute('aria-selected', on ? 'true' : 'false');
+        x.tabIndex = on ? 0 : -1;
+        document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) t.focus();
+    };
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { pick(t); });
+      t.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (d) { e.preventDefault(); pick(tabs[(i + d + tabs.length) % tabs.length], true); }
+      });
+    });
+  }
+  var cap = document.getElementById('fp-cap'), used = document.getElementById('fp-used'), out = document.getElementById('fp-out');
+  if (cap && used && out) {
+    var yen = function (n) { return n.toLocaleString('ja-JP'); };
+    var calc = function () {
+      var c = Number(cap.value) || 0, u = Math.max(0, Number(used.value) || 0), rest = Math.max(0, c - u);
+      out.innerHTML = rest === 0
+        ? 'この月の訪問看護の利用料は <strong>0円</strong>'
+        : 'この月の訪問看護の利用料は、多くても <strong>' + yen(rest) + '円</strong> まで';
+    };
+    cap.addEventListener('change', calc); used.addEventListener('input', calc); calc();
+  }
+
   // 連携機関の掲示（renkei.html だけ）。スプレッドシート（GAS）から最新を読み、だめなら保存済みの一覧を出す。
   var list = document.getElementById('partners');
   if (!list) return;
@@ -223,4 +255,5 @@
   fetch(GAS_URL, { cache: 'no-store' }).then(function (r) { return r.json(); })
     .then(function (d) { clearTimeout(timer); if (render(d, true)) liveShown = true; else fallback(); })
     .catch(function () { clearTimeout(timer); fallback(); });
+
 })();
