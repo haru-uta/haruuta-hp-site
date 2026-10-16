@@ -26,13 +26,64 @@
     var getTicket = function () { return fetch(SRC + '?type=form', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (x) { if (x && x.ok) ticket = x.ticket; }).catch(function () {}); };
     getTicket();
     var errBox = document.getElementById('c-error'), sub = document.getElementById('c-submit');
+    var msgEl = document.getElementById('c-msg'), countEl = document.getElementById('c-count'), leftEl = document.getElementById('c-left');
+    var exBox = document.getElementById('c-ex'), exChips = document.getElementById('c-ex-chips');
+    var picked = function (n) { var x = cf.querySelector('input[name=' + n + ']:checked'); return x ? x.value : ''; };
+    // 書き出しの例文（どなたからのご相談かで変える）。押すと内容の欄に足される。
+    var EX = {
+      self: [['まず話を聞いてみたい', '訪問看護がどんなものか、まずは話を聞いてみたいです。\n今の状況：'],
+             ['料金を知りたい', '利用した場合の料金の目安を知りたいです。\n自立支援医療は（使っている／使っていない／わからない）です。'],
+             ['退院後の生活が不安', 'もうすぐ退院の予定ですが、家に戻ってからの生活が不安です。\n退院の予定：']],
+      family: [['家族のことで相談したい', '家族のことで相談させてください。\n本人は（通院している／通院していない）です。\n困っていること：'],
+               ['本人に内緒で相談したい', 'まだ本人には話していませんが、家族として相談だけしてみたいです。'],
+               ['料金を知りたい', '利用した場合の料金の目安を知りたいです。']],
+      pro: [['利用者さんを紹介したい', 'ご紹介したい方がいます。一度お電話でご相談させてください。\n所属・お名前：\nご連絡のつきやすい時間：'],
+            ['空き状況を知りたい', '新しく訪問をお願いできるか、空き状況を教えてください。\n地域：']],
+      work: [['見学してみたい', '働くことに興味があります。見学や面談をお願いできますか。\n職種：（看護師／准看護師／作業療法士／その他）'],
+             ['働き方を知りたい', '勤務時間や働き方について教えてください。\n職種：']]
+    };
+    var WHO_KEY = {};
+    cf.querySelectorAll('input[name=who]').forEach(function (r) { WHO_KEY[r.value] = r.getAttribute('data-who'); });
+    var showEx = function () {
+      var list = EX[WHO_KEY[picked('who')]] || [];
+      exChips.textContent = '';
+      list.forEach(function (x) {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = x[0];
+        b.addEventListener('click', function () {
+          msgEl.value = msgEl.value.trim() ? msgEl.value.replace(/\s+$/, '') + '\n\n' + x[1] : x[1];
+          msgEl.focus(); msgEl.setSelectionRange(msgEl.value.length, msgEl.value.length); update();
+        });
+        exChips.appendChild(b);
+      });
+      exBox.hidden = !list.length;
+    };
+    // 送信ボタンの横に「あと◯項目」を出す
+    var update = function () {
+      countEl.textContent = msgEl.value.length + ' / 4000';
+      var v = function (id) { return document.getElementById(id).value.trim(); };
+      var need = [picked('who'), picked('kind'), v('c-msg'), v('c-name'), v('c-kana'), v('c-email'), v('c-tel'), document.getElementById('c-agree').checked ? 'x' : ''];
+      var left = need.filter(function (x) { return !x; }).length;
+      leftEl.textContent = left ? 'あと ' + left + ' 項目で送れます' : '送信の準備ができました';
+      leftEl.className = 'f-left' + (left ? '' : ' ready');
+    };
+    cf.addEventListener('input', update);
+    cf.addEventListener('change', function (e) {
+      if (e.target.name === 'who') {
+        showEx();
+        // はたらきたい方は「採用について」を先に選んでおく（あとで変えられる）
+        if (WHO_KEY[e.target.value] === 'work' && !picked('kind')) cf.querySelector('input[name=kind][value="採用について"]').checked = true;
+      }
+      update();
+    });
+    update();
     cf.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var g = function (id) { return document.getElementById(id).value; };
-      var kindEl = cf.querySelector('input[name=kind]:checked');
-      var data = { name: g('c-name'), kana: g('c-kana'), email: g('c-email'), tel: g('c-tel'), kind: kindEl ? kindEl.value : '',
-        message: g('c-msg'), website: g('c-web'), agree: document.getElementById('c-agree').checked, ticket: ticket, requestId: requestId };
+      var data = { who: picked('who'), name: g('c-name'), kana: g('c-kana'), email: g('c-email'), tel: g('c-tel'), kind: picked('kind'),
+        message: g('c-msg'), pref: picked('pref'), time: g('c-time'), source: picked('source'),
+        website: g('c-web'), agree: document.getElementById('c-agree').checked, ticket: ticket, requestId: requestId };
       var miss = [];
+      if (!data.who) miss.push('どなたからのご相談かを選んでください');
       if (!data.name.trim()) miss.push('お名前を入れてください');
       if (!data.kana.trim()) miss.push('ふりがなを入れてください');
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) miss.push('メールアドレスの形を確かめてください');
@@ -45,7 +96,7 @@
       fetch(SRC, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
         .then(function (r) { return r.json(); })
         .then(function (res) {
-          if (res && res.ok) { cf.reset(); cf.hidden = true; document.getElementById('contact-done').hidden = false; window.scrollTo(0, 0); return; }
+          if (res && res.ok) { cf.reset(); cf.hidden = true; document.getElementById('contact-done').hidden = false; document.getElementById('form').scrollIntoView(); return; }
           var msg = (res && res.errors || []).join('\n') || '送信できませんでした';
           if (/開き直して|もう一度/.test(msg)) getTicket();
           var known = new Error(msg); known.known = true; throw known;
