@@ -122,6 +122,10 @@ dl.facts dd{min-width:0;overflow-wrap:anywhere}
 .notice > section{display:grid;gap:10px}
 .notice ul{margin:0;padding-left:1.2em}
 .partners-meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:.92rem;color:var(--muted)}
+.partner-groups{display:grid;gap:26px}
+.p-group{display:grid;gap:10px}
+.p-group-head{font-family:var(--body);font-size:1.05rem;display:flex;align-items:baseline;gap:10px;color:var(--deep)}
+.p-group-head small{font-size:.85rem;color:var(--muted);font-weight:400}
 .partners{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px}
 .partners li{border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px;min-width:0}
 .partners .p-name{font-weight:700;font-size:1.02rem}

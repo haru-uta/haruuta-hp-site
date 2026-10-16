@@ -23,28 +23,49 @@
   var GAS_URL = list.getAttribute('data-src');
   var meta = document.getElementById('partners-meta');
   function fmtDate(s) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? m[1] + '年' + Number(m[2]) + '月' + Number(m[3]) + '日' : ''; }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function render(data, live) {
     if (!data || !data.ok || !data.items) return false;
     list.textContent = '';
+    var groups = {}, order = (data.categories || []).slice();
     data.items.forEach(function (p) {
-      var li = document.createElement('li');
-      var n = document.createElement('span'); n.className = 'p-name'; n.textContent = p.name; li.appendChild(n);
-      if (p.kind) { var k = document.createElement('span'); k.className = 'p-kind'; k.textContent = p.kind; li.appendChild(k); }
-      var a = document.createElement('span'); a.className = 'p-addr'; a.textContent = (p.zip ? '〒' + p.zip + ' ' : '') + p.address; li.appendChild(a);
-      list.appendChild(li);
+      var c = p.category || 'その他';
+      if (!groups[c]) { groups[c] = []; if (order.indexOf(c) < 0) order.push(c); }
+      groups[c].push(p);
+    });
+    order.forEach(function (c) {
+      if (!groups[c]) return;
+      var g = el('section', 'p-group');
+      var h = el('h3', 'p-group-head'); h.appendChild(el('span', null, c)); h.appendChild(el('small', null, groups[c].length + ' 機関'));
+      g.appendChild(h);
+      var ul = el('ul', 'partners');
+      groups[c].forEach(function (p) {
+        var li = el('li');
+        li.appendChild(el('span', 'p-name', p.name));
+        if (p.kind) li.appendChild(el('span', 'p-kind', p.kind));
+        li.appendChild(el('span', 'p-addr', (p.zip ? '〒' + p.zip + ' ' : '') + p.address));
+        ul.appendChild(li);
+      });
+      g.appendChild(ul);
+      list.appendChild(g);
     });
     meta.textContent = '';
-    var c = document.createElement('span'); c.textContent = '掲載 ' + data.items.length + ' 機関'; meta.appendChild(c);
-    var u = document.createElement('span'); u.textContent = '最終更新：' + fmtDate(data.updated); meta.appendChild(u);
+    meta.appendChild(el('span', null, '掲載 ' + data.items.length + ' 機関'));
+    meta.appendChild(el('span', null, '最終更新：' + fmtDate(data.updated)));
     list.setAttribute('data-live', live ? '1' : '0');
     return true;
   }
+  // 最新（GAS）が出たら、それ以後は保存済みの一覧やエラー表示で上書きしない。
+  var liveShown = false, fallbackStarted = false;
   function fallback() {
-    return fetch('data/partners.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) { render(d, false); })
-      .catch(function () { meta.textContent = '一覧を読み込めませんでした。お手数ですがお電話でお問い合わせください。'; });
+    if (liveShown || fallbackStarted) return;
+    fallbackStarted = true;
+    fetch('data/partners.json', { cache: 'no-store' }).then(function (r) { return r.json(); })
+      .then(function (d) { if (!liveShown) render(d, false); })
+      .catch(function () { if (!liveShown && !list.children.length) meta.textContent = '一覧を読み込めませんでした。お手数ですがお電話でお問い合わせください。'; });
   }
-  var timer = setTimeout(function () { if (!list.children.length) fallback(); }, 6000);
+  var timer = setTimeout(fallback, 6000);
   fetch(GAS_URL, { cache: 'no-store' }).then(function (r) { return r.json(); })
-    .then(function (d) { clearTimeout(timer); if (!render(d, true)) fallback(); })
+    .then(function (d) { clearTimeout(timer); if (render(d, true)) liveShown = true; else fallback(); })
     .catch(function () { clearTimeout(timer); fallback(); });
 })();
