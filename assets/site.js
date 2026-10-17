@@ -17,6 +17,27 @@
     });
   });
 
+  // トップの紹介動画（ある時だけ）。動きを減らす設定・データ節約モードの人には流さず、絵のまま。
+  var hv = document.querySelector('.hero-video');
+  if (hv) {
+    var frame = hv.parentNode, playBtn = frame.querySelector('.hv-play'), soundBtn = frame.querySelector('.hv-sound');
+    var still = (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) || (navigator.connection && navigator.connection.saveData);
+    if (still) { frame.classList.add('hv-still'); hv.removeAttribute('autoplay'); hv.preload = 'none'; }
+    else {
+      var setPlay = function (playing) { playBtn.textContent = playing ? '一時停止' : (hv.ended ? 'もう一度見る' : '再生'); playBtn.setAttribute('aria-pressed', playing ? 'false' : 'true'); };
+      hv.addEventListener('play', function () { setPlay(true); });
+      hv.addEventListener('pause', function () { setPlay(false); });
+      hv.addEventListener('ended', function () { setPlay(false); });
+      hv.addEventListener('error', function () { frame.classList.add('hv-still'); }, true);
+      playBtn.addEventListener('click', function () { if (hv.paused) { if (hv.ended) hv.currentTime = 0; hv.play(); } else hv.pause(); });
+      soundBtn.addEventListener('click', function () {
+        hv.muted = !hv.muted; soundBtn.textContent = hv.muted ? '音を出す' : '音を消す'; soundBtn.setAttribute('aria-pressed', hv.muted ? 'false' : 'true');
+        if (!hv.muted && hv.paused) { if (hv.ended) hv.currentTime = 0; hv.play(); }
+      });
+      var p = hv.play(); if (p && p.catch) p.catch(function () { setPlay(false); });
+    }
+  }
+
   // お問い合わせ（contact.html だけ）。GAS の doPost へ送り、メールで届く。
   var cf = document.getElementById('contact-form');
   if (cf) {
