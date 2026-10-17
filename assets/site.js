@@ -146,7 +146,7 @@
     var SURL = staffBox.getAttribute('data-src');
     var intro = document.getElementById('staff-intro');
     var mk = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-    var DEPT_TITLE = { '代表': '', '看護': '看護師', 'リハビリ': 'リハビリ（作業療法士）', '事務': '事務' };
+    var DEPT_TITLE = { '代表': '', '看護': '看護師（准看護師を含む）', 'リハビリ': 'リハビリ（作業療法士）', '事務': '事務' };
     fetch(SURL + '?type=staff', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
       if (!d || !d.ok || !d.items || !d.items.length) throw new Error('empty');
       intro.textContent = d.intro || '';
