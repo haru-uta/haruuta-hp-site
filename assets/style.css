@@ -30,7 +30,7 @@ input,textarea,select{word-break:normal}
 .site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(251,252,250,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .site-head .wrap{display:flex;align-items:center;gap:18px;min-height:84px;position:relative}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);flex:0 0 auto}
-.brand img{width:58px;height:auto;aspect-ratio:1}
+.brand img{width:70px;height:auto;aspect-ratio:1}  /* 2026-10-17 代表「ロゴを一回り大きく」58→70 */
 .brand .bt{display:grid;line-height:1.35}
 .brand small{font-size:.66rem;color:var(--muted);letter-spacing:.12em}
 .brand b{font-family:var(--display);font-size:1.3rem;letter-spacing:.14em;font-weight:700}
@@ -169,7 +169,7 @@ dl.facts dd{min-width:0;overflow-wrap:anywhere}
 .site-foot a{color:#ffffff;text-decoration:none}
 .site-foot nav{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.92rem}
 .site-foot .fb{display:flex;align-items:center;gap:14px}
-.site-foot .fb img{width:54px;background:#fff;border-radius:50%;padding:6px}
+.site-foot .fb img{width:66px;background:#fff;border-radius:50%;padding:6px}
 .site-foot .fb b{font-family:var(--display);font-size:1.15rem;letter-spacing:.12em}
 .site-foot small{color:#b9cdc2}
 
@@ -397,7 +397,7 @@ details.qa[open] summary::after{content:"−"}
   .site-foot .fb b{font-size:1rem;letter-spacing:.06em;white-space:nowrap}
   body{font-size:15.5px}
   .site-head .wrap{min-height:70px}
-  .brand img{width:46px}
+  .brand img{width:56px}
   .brand b{font-size:1.1rem}
   .brand small{display:none}
   .brand{min-width:0;flex:1 1 auto}
@@ -554,3 +554,4 @@ details.qa[open] summary::after{content:"−"}
 .aw-map iframe{width:100%;height:100%;border:0;display:block}
 .facts dd small{color:var(--muted);font-size:.82rem}
 @media (max-width:820px){ .aw-grid{grid-template-columns:1fr} .access-way{padding:22px 18px} }
+@media (max-width:374px){ .site-foot .fb b{white-space:normal} }  /* 320px などの小さな画面は「ステーション／はるうた」で折り返す */
