@@ -167,7 +167,35 @@
     var SURL = staffBox.getAttribute('data-src');
     var intro = document.getElementById('staff-intro');
     var mk = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-    var DEPT_TITLE = { '代表': '', '看護': '看護師（准看護師を含む）', 'リハビリ': 'リハビリ（作業療法士）', '事務': '事務' };
+    // 似顔絵の大きさ・位置をそろえる（2026-10-17 代表「統一感がない」）。元の絵は余白も縦横比もばらばらなので、
+    // 白い背景から絵の描かれた範囲を探し、その範囲が 3:4 の枠の同じ割合を占めるように白地へ描き直す。失敗したら元の絵のまま。
+    var fitPortrait = function (data, done) {
+      var src = new Image();
+      src.onload = function () {
+        try {
+          var W = src.naturalWidth, H = src.naturalHeight, k = Math.min(1, 240 / Math.max(W, H));
+          var sw = Math.max(1, Math.round(W * k)), sh = Math.max(1, Math.round(H * k));
+          var c = document.createElement('canvas'); c.width = sw; c.height = sh;
+          var g = c.getContext('2d'); g.drawImage(src, 0, 0, sw, sh);
+          var px = g.getImageData(0, 0, sw, sh).data, x0 = sw, y0 = sh, x1 = -1, y1 = -1;
+          for (var y = 0; y < sh; y++) for (var x = 0; x < sw; x++) {
+            var i = (y * sw + x) * 4;
+            if (px[i + 3] > 40 && (px[i] < 225 || px[i + 1] < 225 || px[i + 2] < 225)) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+          }
+          if (x1 < 0) return done(data);
+          var bx = x0 / k, by = y0 / k, bw = (x1 - x0 + 1) / k, bh = (y1 - y0 + 1) / k;
+          var OW = 600, OH = 800, s = Math.min(OH * 0.80 / bh, OW * 0.86 / bw);
+          var o = document.createElement('canvas'); o.width = OW; o.height = OH;
+          var og = o.getContext('2d'); og.fillStyle = '#fff'; og.fillRect(0, 0, OW, OH);
+          var dw = bw * s, dh = bh * s;
+          og.drawImage(src, bx, by, bw, bh, (OW - dw) / 2, OH * 0.12, dw, dh);
+          done(o.toDataURL('image/jpeg', 0.9));
+        } catch (e) { done(data); }
+      };
+      src.onerror = function () { done(data); };
+      src.src = data;
+    };
+    var DEPT_TITLE ={ '代表': '', '看護': '看護師（准看護師を含む）', 'リハビリ': 'リハビリ（作業療法士）', '事務': '事務' };
     fetch(SURL + '?type=staff', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
       if (!d || !d.ok || !d.items || !d.items.length) throw new Error('empty');
       intro.textContent = d.intro || '';
@@ -187,7 +215,7 @@
           if (p.comment) card.appendChild(mk('p', 'cm', p.comment));
           grid.appendChild(card);
           if (p.photo) fetch(SURL + '?photo=' + encodeURIComponent(p.photo)).then(function (r) { return r.json(); }).then(function (x) {
-            if (x && x.ok && /^data:image\//.test(x.data)) { var im = mk('img'); im.alt = p.name + 'さんの似顔絵'; im.src = x.data; ph.appendChild(im); }
+            if (x && x.ok && /^data:image\//.test(x.data)) fitPortrait(x.data, function (src) { var im = mk('img'); im.alt = p.name + 'さんの似顔絵'; im.src = src; ph.appendChild(im); });
           }).catch(function () {});
         });
         sec.appendChild(grid);
