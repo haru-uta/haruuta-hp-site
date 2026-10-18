@@ -195,6 +195,50 @@
       src.onerror = function () { done(data); };
       src.src = data;
     };
+    // プロフィールの窓（1つを使い回す）。閉じるボタン・Esc・外側を押すと閉じ、開く前のカードへ戻る
+    var dlg = null, lastCard = null;
+    var openProfile = function (p, ph) {
+      if (!dlg) {
+        dlg = mk('dialog', 'staff-dlg');
+        dlg.setAttribute('aria-label', 'スタッフのプロフィール');
+        dlg.addEventListener('click', function (e) {  // 窓の外（暗い所）を押したときだけ閉じる。窓の中の余白では閉じない
+          if (e.target !== dlg) return;
+          var r = dlg.getBoundingClientRect();
+          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+        });
+        dlg.addEventListener('close', function () { if (lastCard) lastCard.focus(); });
+        document.body.appendChild(dlg);
+      }
+      lastCard = ph.parentNode.querySelector('.more');
+      dlg.textContent = '';
+      var x = mk('button', 'x', '閉じる'); x.type = 'button'; x.addEventListener('click', function () { dlg.close(); }); dlg.appendChild(x);
+      var top = mk('div', 'sd-top');
+      var im = ph.querySelector('img');
+      if (im) { var c = im.cloneNode(); c.alt = ''; var f = mk('div', 'sd-ph'); f.appendChild(c); top.appendChild(f); }
+      var who = mk('div', 'sd-who');
+      who.appendChild(mk('span', 'role', p.role));
+      who.appendChild(mk('h2', 'nm', p.name));
+      if (p.roma) who.appendChild(mk('span', 'rm', p.roma));
+      top.appendChild(who);
+      dlg.appendChild(top);
+      if (p.quals && p.quals.length) {
+        var qb = mk('div', 'sd-quals'); qb.appendChild(mk('h3', null, '資格'));
+        var tg = mk('div', 'quals'); p.quals.forEach(function (q) { tg.appendChild(mk('span', null, q)); }); qb.appendChild(tg);
+        dlg.appendChild(qb);
+      }
+      if (p.from || p.hobby || p.keep) {
+        var dl = mk('dl', 'sd-facts');
+        [['出身地', p.from], ['趣味', p.hobby], ['譲れないもの', p.keep]].forEach(function (r) { if (r[1]) { dl.appendChild(mk('dt', null, r[0])); dl.appendChild(mk('dd', null, r[1])); } });
+        dlg.appendChild(dl);
+      }
+      if (p.member) {
+        var given = String(p.name).split(/[\s　]+/).pop();
+        var mb = mk('div', 'sd-member'); mb.appendChild(mk('h3', null, 'メンバーからみた' + given + 'さん')); mb.appendChild(mk('p', null, p.member));
+        dlg.appendChild(mb);
+      }
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      x.focus();
+    };
     var DEPT_TITLE ={ '代表': '', '看護': '看護師（准看護師を含む）', 'リハビリ': 'リハビリ（作業療法士）', '事務': '事務' };
     fetch(SURL + '?type=staff', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
       if (!d || !d.ok || !d.items || !d.items.length) throw new Error('empty');
@@ -226,8 +270,17 @@
           card.appendChild(mk('span', 'role', p.role));
           card.appendChild(mk('span', 'nm', p.name));
           if (p.roma) card.appendChild(mk('span', 'rm', p.roma));
-          if (p.quals && p.quals.length) { var tg = mk('span', 'quals'); p.quals.forEach(function (q) { tg.appendChild(mk('span', null, q)); }); card.appendChild(tg); }
           if (p.comment) card.appendChild(mk('p', 'cm', p.comment));
+          // 詳しいプロフィール（資格・出身地・趣味・譲れないもの・メンバーからみた）があれば、カードを押すと開く（旧HPの ◢ と同じ役目）
+          if ((p.quals && p.quals.length) || p.from || p.hobby || p.keep || p.member) {
+            card.classList.add('has-more');
+            var more = mk('button', 'more', 'プロフィール');
+            more.type = 'button';
+            more.setAttribute('aria-haspopup', 'dialog');
+            more.setAttribute('aria-label', p.name + 'さんのプロフィールを開く');
+            card.appendChild(more);
+            card.addEventListener('click', function () { openProfile(p, ph); });
+          }
           grid.appendChild(card);
           if (p.photo) fetch(SURL + '?photo=' + encodeURIComponent(p.photo)).then(function (r) { return r.json(); }).then(function (x) {
             if (x && x.ok && /^data:image\//.test(x.data)) fitPortrait(x.data, function (src) { var im = mk('img'); im.alt = p.name + 'さんの似顔絵'; im.src = src; ph.appendChild(im); });
