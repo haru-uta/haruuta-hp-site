@@ -635,3 +635,9 @@ mark.tbc{background:#fff3c4;color:#7a5200;border-radius:6px;padding:1px 6px;font
 .op-grid figure{margin:0;background:var(--white);border:1px solid var(--line);border-radius:18px;overflow:hidden}
 .op-grid img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
 .op-grid figcaption{font-size:.82rem;color:var(--muted);padding:8px 12px;line-height:1.6}
+
+/* 説明動画B（はじめての方へ。settings.json の intro_video） */
+.intro-video{margin-top:40px;text-align:center}
+.intro-video h3{font-size:1.1rem;color:var(--deep);margin:0 0 14px;letter-spacing:.08em}
+.intro-video h3 small{display:block;font-size:.78rem;color:var(--muted);font-weight:400;letter-spacing:.04em;margin-top:2px}
+.intro-video video{display:block;width:100%;max-width:880px;height:auto;margin:0 auto;border-radius:20px;background:#e9efe9;box-shadow:0 10px 30px rgba(60,90,70,.12)}

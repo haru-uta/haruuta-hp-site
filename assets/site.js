@@ -292,6 +292,12 @@
     }).catch(function () { intro.textContent = 'スタッフ紹介を読み込めませんでした。時間をおいて、もう一度お試しください。'; });
   }
 
+  // 説明動画B: 広い画面では、再生する前に大きい版（720p）に替える（スマホは小さい版のまま）
+  var iv = document.querySelector('.intro-video video');
+  if (iv && iv.getAttribute('data-hd') && window.matchMedia('(min-width: 900px)').matches) {
+    var srcEl = iv.querySelector('source'); if (srcEl) { srcEl.src = iv.getAttribute('data-hd'); iv.load(); }
+  }
+
   // 新規の受け入れ状況（2026-10-18。トップ・お問い合わせ・医療機関の方へ）。シートで「HPに出さない」・読めないときは何も出さない
   var accSlots = document.querySelectorAll('.acc-slot');
   if (accSlots.length) {
