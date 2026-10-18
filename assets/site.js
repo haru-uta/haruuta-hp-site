@@ -201,6 +201,18 @@
       intro.textContent = d.intro || '';
       var groups = {};
       d.items.forEach(function (p) { (groups[p.dept] = groups[p.dept] || []).push(p); });
+      // 資格ごとの人数（2026-10-18 代表。シートの「資格」の列から自動で数える。職種は数えない）
+      var qn = {}, qorder = [];
+      d.items.forEach(function (p) { (p.quals || []).forEach(function (q) { if (!qn[q]) { qn[q] = 0; qorder.push(q); } qn[q]++; }); });
+      if (qorder.length) {
+        qorder.sort(function (a, b) { return qn[b] - qn[a] || qorder.indexOf(a) - qorder.indexOf(b); });
+        var qs = mk('section', 'staff-quals');
+        qs.appendChild(mk('h2', null, 'スタッフの資格'));
+        var ql = mk('ul', 'qual-list');
+        qorder.forEach(function (q) { var li = mk('li', null, q); li.appendChild(mk('b', null, String(qn[q]))); li.appendChild(document.createTextNode('名')); ql.appendChild(li); });
+        qs.appendChild(ql);
+        staffBox.appendChild(qs);
+      }
       (d.depts || Object.keys(groups)).forEach(function (dep) {
         if (!groups[dep]) return;
         var sec = mk('section', 'staff-group');
@@ -212,6 +224,7 @@
           card.appendChild(mk('span', 'role', p.role));
           card.appendChild(mk('span', 'nm', p.name));
           if (p.roma) card.appendChild(mk('span', 'rm', p.roma));
+          if (p.quals && p.quals.length) { var tg = mk('span', 'quals'); p.quals.forEach(function (q) { tg.appendChild(mk('span', null, q)); }); card.appendChild(tg); }
           if (p.comment) card.appendChild(mk('p', 'cm', p.comment));
           grid.appendChild(card);
           if (p.photo) fetch(SURL + '?photo=' + encodeURIComponent(p.photo)).then(function (r) { return r.json(); }).then(function (x) {

@@ -581,3 +581,12 @@ details.qa[open] summary::after{content:"−"}
 .pro-contact p{margin:0;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
 .pro-contact .num{font:700 1.4rem var(--body);color:var(--deep);text-decoration:none;font-variant-numeric:tabular-nums}
 mark.tbc{background:#fff3c4;color:#7a5200;border-radius:6px;padding:1px 6px;font-size:.9em}
+
+/* スタッフの資格（2026-10-18） */
+.staff-quals{margin:0 0 34px;text-align:center}
+.staff-quals h2{font-size:1.15rem;margin-bottom:12px}
+.qual-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.qual-list li{background:var(--white);border:1.5px solid var(--sage);border-radius:999px;padding:6px 16px;font-size:.92rem;line-height:1.6}
+.qual-list b{font-size:1.15rem;color:var(--deep);margin:0 2px 0 8px;font-variant-numeric:tabular-nums}
+.staff-card .quals{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:4px}
+.staff-card .quals span{font-size:.68rem;line-height:1.5;background:var(--sage-soft);color:var(--deep);border-radius:999px;padding:2px 8px;letter-spacing:.02em}
