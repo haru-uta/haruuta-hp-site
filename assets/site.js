@@ -202,10 +202,12 @@
       var groups = {};
       d.items.forEach(function (p) { (groups[p.dept] = groups[p.dept] || []).push(p); });
       // 資格ごとの人数（2026-10-18 代表。シートの「資格」の列から自動で数える。職種は数えない）
-      var qn = {}, qorder = [];
-      d.items.forEach(function (p) { (p.quals || []).forEach(function (q) { if (!qn[q]) { qn[q] = 0; qorder.push(q); } qn[q]++; }); });
+      // ページの上に出すのは「資格の一覧」でチェックした資格だけ（2026-10-18 代表。関係のない資格も書くことがあるため）
+      var qn = {}, qorder = (d.featured || []).slice();
+      qorder.forEach(function (q) { qn[q] = 0; });
+      d.items.forEach(function (p) { (p.quals || []).forEach(function (q) { if (q in qn) qn[q]++; }); });
+      qorder = qorder.filter(function (q) { return qn[q] > 0; });
       if (qorder.length) {
-        qorder.sort(function (a, b) { return qn[b] - qn[a] || qorder.indexOf(a) - qorder.indexOf(b); });
         var qs = mk('section', 'staff-quals');
         qs.appendChild(mk('h2', null, 'スタッフの資格'));
         var ql = mk('ul', 'qual-list');
@@ -235,6 +237,26 @@
         staffBox.appendChild(sec);
       });
     }).catch(function () { intro.textContent = 'スタッフ紹介を読み込めませんでした。時間をおいて、もう一度お試しください。'; });
+  }
+
+  // 新規の受け入れ状況（2026-10-18。トップ・お問い合わせ・医療機関の方へ）。シートで「HPに出さない」・読めないときは何も出さない
+  var accSlots = document.querySelectorAll('.acc-slot');
+  if (accSlots.length) {
+    var mkA = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+    fetch(accSlots[0].getAttribute('data-src') + '?type=accept', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (a) {
+      if (!a || !a.ok || !/^(ok|adj|stop)$/.test(a.key)) return;
+      accSlots.forEach(function (slot) {
+        var box = mkA('div', 'acc acc-' + a.key);
+        box.appendChild(mkA('span', 'dot'));
+        var tx = mkA('div');
+        tx.appendChild(mkA('b', null, a.title));
+        tx.appendChild(document.createTextNode(a.sub || ''));
+        if (a.note) tx.appendChild(mkA('span', 'acc-note', a.note));
+        if (a.updated) tx.appendChild(mkA('small', null, a.updated + ' 更新'));
+        box.appendChild(tx);
+        slot.appendChild(box);
+      });
+    }).catch(function () {});
   }
 
   // ご利用の流れと料金（flow-price.html だけ）: 受給者証のタブと、自立支援医療の目安
