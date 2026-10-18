@@ -563,3 +563,21 @@ details.qa[open] summary::after{content:"−"}
 .hv-btn{font:inherit;font-size:.78rem;letter-spacing:.06em;color:#fff;background:rgba(47,84,68,.82);border:0;border-radius:999px;padding:8px 14px;min-height:36px;cursor:pointer}
 .hv-btn:hover{background:var(--deep)}
 @media (max-width:480px){ .hv-ctrl{right:8px;bottom:8px;gap:6px} .hv-btn{font-size:.68rem;padding:5px 10px;min-height:30px;background:rgba(47,84,68,.7)} }
+
+/* 医療機関・事業所の方へ（pro.html、2026-10-18 下書き） */
+.pro-wrap{max-width:860px}
+.pro-lead{font-size:1.02rem;line-height:2.1}
+.pro-page h2{font-size:1.35rem;margin:46px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line);scroll-margin-top:96px}
+.pro-steps{counter-reset:ps;list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.pro-steps li{counter-increment:ps;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:14px 18px 14px 64px;position:relative;line-height:1.95}
+.pro-steps li::before{content:counter(ps);position:absolute;left:16px;top:14px;width:34px;height:34px;border-radius:50%;background:var(--sage);color:var(--white);display:grid;place-items:center;font-family:var(--display)}
+.pro-steps b{display:block;color:var(--deep)}
+.pro-dl{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);gap:0;margin:0;border-top:1px solid var(--line)}
+.pro-dl dt,.pro-dl dd{margin:0;padding:12px 8px;border-bottom:1px solid var(--line);line-height:1.9}
+.pro-dl dt{color:var(--deep);font-weight:500}
+@media (max-width:560px){.pro-dl{grid-template-columns:1fr}.pro-dl dt{border-bottom:0;padding-bottom:0}.pro-steps li{padding-left:56px}}
+.pro-list{line-height:2;padding-left:1.2em}
+.pro-contact{display:grid;gap:10px}
+.pro-contact p{margin:0;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.pro-contact .num{font:700 1.4rem var(--body);color:var(--deep);text-decoration:none;font-variant-numeric:tabular-nums}
+mark.tbc{background:#fff3c4;color:#7a5200;border-radius:6px;padding:1px 6px;font-size:.9em}
