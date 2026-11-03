@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ご面談 事前ヒアリングシート｜訪問看護ステーションはるうた</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Zen+Old+Mincho:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbfcfa; --white:#fff; --ink:#3a4741; --muted:#5d6e66; --sage:#7fa08c; --sage-soft:#edf3ee; --sage-ink:#4e7460;
+  --mist:#e4eeee; --deep:#2f5444; --line:#dbe5de; --blush:#f7ecea; --gold:#b98a3e; --err:#a3343f;
+  --display:"Zen Old Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+  --body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+  --r:18px; --shadow:0 10px 30px rgba(47,84,68,.08),0 2px 6px rgba(47,84,68,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.8;-webkit-text-size-adjust:100%;word-break:auto-phrase}
+a{color:var(--sage-ink)}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+
+/* ---------- 見出し ---------- */
+.hero{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(251,252,250,.55),var(--paper) 92%),url(assets/watercolor.jpg) center/cover}
+.hero .wrap{padding-top:34px;padding-bottom:30px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--deep);font-weight:700;letter-spacing:.04em;font-size:15px}
+.brand img{width:46px;height:46px;object-fit:contain}
+.eyebrow{margin:30px 0 6px;font-size:12px;letter-spacing:.32em;color:var(--sage-ink);font-weight:700}
+h1{font-family:var(--display);font-size:clamp(28px,6.4vw,42px);line-height:1.35;margin:0;color:var(--deep);letter-spacing:.04em}
+.lead{margin:16px 0 0;font-size:16.5px;color:var(--ink);max-width:36em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:14px;color:var(--deep)}
+.chip b{color:var(--gold)}
+
+/* ---------- 進み具合 ---------- */
+.steps{position:sticky;top:0;z-index:5;background:rgba(251,252,250,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.steps .wrap{padding-top:10px;padding-bottom:10px}
+.steplist{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:0;padding:0;list-style:none}
+.steplist button{width:100%;border:0;background:none;padding:4px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:12px;line-height:1.3}
+.steplist .n{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px;background:var(--white);border:1.5px solid var(--line);transition:.25s}
+.steplist .on .n{background:var(--deep);border-color:var(--deep);color:#fff;box-shadow:0 0 0 5px rgba(47,84,68,.12)}
+.steplist .on{color:var(--deep);font-weight:700}
+.steplist .done .n{background:var(--sage-soft);border-color:var(--sage);color:var(--sage-ink)}
+.bar{height:4px;background:var(--line);border-radius:4px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sage),var(--deep));transition:width .4s}
+
+/* ---------- 画面 ---------- */
+main{padding:26px 0 40px}
+.screen{display:none;animation:fade .35s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:28px 22px}
+.num{font-family:var(--display);color:var(--sage);font-size:15px;letter-spacing:.2em}
+h2{font-family:var(--display);color:var(--deep);font-size:clamp(22px,5vw,28px);margin:2px 0 6px;line-height:1.45}
+.why{margin:0 0 22px;padding:12px 16px;background:var(--sage-soft);border-radius:12px;font-size:15px;color:var(--sage-ink)}
+.why::before{content:"なぜ伺うのか　";font-weight:700;color:var(--deep)}
+.field{margin:0 0 22px}
+.field>label,.field>.lbl{display:block;font-weight:700;color:var(--deep);margin-bottom:6px}
+.req{display:inline-block;margin-left:8px;font-size:12px;color:#fff;background:var(--gold);border-radius:6px;padding:0 7px;vertical-align:2px}
+.opt{display:inline-block;margin-left:8px;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:0 7px;vertical-align:2px}
+.hint{font-size:14px;color:var(--muted);margin:-2px 0 8px}
+input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea{width:100%;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:17px;transition:border .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--sage-ink) 50%),linear-gradient(135deg,var(--sage-ink) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+textarea{min-height:120px;resize:vertical;line-height:1.75}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 4px rgba(127,160,140,.2);background:#fff}
+.bad input,.bad textarea,.bad select{border-color:var(--err)}
+.msg{display:none;color:var(--err);font-size:14px;margin-top:6px}
+.bad .msg{display:block}
+.count{text-align:right;font-size:12px;color:var(--muted);margin-top:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* 日時 */
+.slot{display:grid;grid-template-columns:auto 1fr 1fr;gap:10px;align-items:center;padding:14px;border:1.5px dashed var(--line);border-radius:14px;margin-bottom:10px;background:var(--paper)}
+.slot .tag{font-family:var(--display);color:var(--deep);font-weight:700;white-space:nowrap}
+.slot.first{border-style:solid;border-color:var(--sage);background:var(--sage-soft)}
+
+/* 選ぶボタン */
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.pills label{position:relative;cursor:pointer}
+.pills input{position:absolute;opacity:0;pointer-events:none}
+.pills span{display:inline-block;padding:10px 18px;border:1.5px solid var(--line);border-radius:999px;background:var(--white);font-size:15.5px;transition:.2s}
+.pills input:checked+span{background:var(--deep);border-color:var(--deep);color:#fff;box-shadow:0 4px 12px rgba(47,84,68,.2)}
+.pills input:focus-visible+span{box-shadow:0 0 0 4px rgba(127,160,140,.35)}
+
+/* 時の流れ */
+.timeline{position:relative;padding-left:28px;margin-bottom:6px}
+.timeline::before{content:"";position:absolute;left:9px;top:10px;bottom:10px;width:2px;background:linear-gradient(var(--sage),var(--gold))}
+.timeline .field{position:relative}
+.timeline .field::before{content:"";position:absolute;left:-25px;top:6px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--sage)}
+.timeline .field.far::before{border-color:var(--gold)}
+.when{display:inline-block;font-size:12px;letter-spacing:.15em;color:var(--sage-ink);background:var(--sage-soft);border-radius:6px;padding:0 8px;margin-bottom:4px}
+.far .when{color:#8a6420;background:#f6eedd}
+
+/* 送る前の確認 */
+.sum h3{font-family:var(--display);color:var(--deep);font-size:18px;margin:24px 0 8px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:4px}
+.sum h3 button{border:0;background:none;color:var(--sage-ink);font-size:14px;cursor:pointer;text-decoration:underline}
+.sum dl{margin:0;display:grid;grid-template-columns:9em 1fr;gap:6px 14px;font-size:15.5px}
+.sum dt{color:var(--muted)}
+.sum dd{margin:0;white-space:pre-wrap;word-break:break-word}
+.sum dd.none{color:#a5b1ab}
+.note{font-size:14.5px;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:20px 0}
+.agree{display:flex;gap:12px;align-items:flex-start;font-weight:700;color:var(--deep);cursor:pointer}
+.agree input{width:24px;height:24px;margin-top:3px;accent-color:var(--deep);flex:none}
+
+/* 送りボタン */
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+.btn{border:0;border-radius:999px;padding:15px 28px;font-weight:700;font-size:17px;cursor:pointer;transition:.2s}
+.btn.next{background:var(--deep);color:#fff;margin-left:auto;box-shadow:0 8px 18px rgba(47,84,68,.22)}
+.btn.next:hover{transform:translateY(-1px)}
+.btn.back{background:none;color:var(--sage-ink);border:1.5px solid var(--line)}
+.btn.send{background:linear-gradient(135deg,var(--deep),#3e6b57);color:#fff;width:100%;font-size:19px;padding:18px;box-shadow:0 10px 24px rgba(47,84,68,.28)}
+.btn:disabled{opacity:.55;cursor:wait;transform:none}
+.errs{display:none;background:var(--blush);color:var(--err);border-radius:12px;padding:12px 16px;margin-top:14px;font-size:15px}
+
+/* 届いた */
+.done{text-align:center;padding:44px 22px}
+.done .mark{width:76px;height:76px;margin:0 auto 14px;border-radius:50%;background:var(--sage-soft);display:grid;place-items:center}
+.tel{display:inline-flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap;justify-content:center}
+.tel a{font-size:30px;font-weight:700;color:var(--deep);text-decoration:none;letter-spacing:.04em}
+.copy{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer;color:var(--sage-ink)}
+
+.saved{position:fixed;left:50%;bottom:18px;transform:translate(-50%,30px);opacity:0;background:var(--deep);color:#fff;padding:8px 18px;border-radius:999px;font-size:14px;transition:.3s;pointer-events:none;z-index:9}
+.saved.show{opacity:.92;transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13.5px;text-align:center}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+@media (max-width:620px){
+  html,body{font-size:16px}
+  .card{padding:22px 16px}
+  .steplist .t{display:none}
+  .row2{grid-template-columns:1fr}
+  .slot{grid-template-columns:1fr}
+  .slot .tag{grid-column:auto}
+  .sum dl{grid-template-columns:1fr;gap:0}
+  .sum dd{margin-bottom:10px}
+  .btn{padding:14px 22px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><img src="assets/logo_s.webp" alt="">訪問看護ステーションはるうた</div>
+    <p class="eyebrow">PRE-MEETING SHEET</p>
+    <h1>ご面談<br>事前ヒアリングシート</h1>
+    <p class="lead">当日の30分を、あなたの事業にとっていちばん価値のある時間にするために。<br>描いている事業と、その先の未来を、少しだけ先にお聞かせください。</p>
+    <div class="chips">
+      <span class="chip">所要 約10分</span>
+      <span class="chip"><b>必須</b> の項目だけでも送れます</span>
+      <span class="chip">書いた内容はこの端末に7日間保存</span>
+    </div>
+  </div>
+</header>
+
+<nav class="steps" aria-label="進み具合">
+  <div class="wrap">
+    <ol class="steplist" id="steplist"></ol>
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+</nav>
+
+<main class="wrap">
+<form id="f" novalidate autocomplete="on">
+  <div class="hp" aria-hidden="true"><label>ウェブサイト<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+  <!-- 1 ご連絡先 -->
+  <section class="screen" data-step="1">
+    <div class="card">
+      <div class="num">STEP 01</div>
+      <h2>ご連絡先</h2>
+      <p class="why"><span class="jw">日程の<wbr>ご連絡と、<wbr>当日<wbr>お迎えする<wbr>準備の<wbr>ためです。</span></p>
+      <div class="row2">
+        <div class="field" data-req="name"><label for="name">お名前<span class="req">必須</span></label><input type="text" id="name" name="name" autocomplete="name" placeholder="例）春野 歌子"><div class="msg">お名前を入れてください</div></div>
+        <div class="field" data-req="kana"><label for="kana">ふりがな<span class="req">必須</span></label><input type="text" id="kana" name="kana" placeholder="例）はるの うたこ"><div class="msg"><span class="jw">ふりがなを<wbr>入れてください</span></div></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="org">所属・屋号<span class="opt">任意</span></label><input type="text" id="org" name="org" autocomplete="organization" placeholder="例）〇〇合同会社（設立予定）"></div>
+        <div class="field"><label for="role">肩書き<span class="opt">任意</span></label><input type="text" id="role" name="role" placeholder="例）代表・理学療法士"></div>
+      </div>
+      <div class="row2">
+        <div class="field" data-req="email"><label for="email">メールアドレス<span class="req">必須</span></label><input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="example@mail.com"><div class="msg"><span class="jw">メールアドレスの<wbr>形を<wbr>確かめてください</span></div></div>
+        <div class="field" data-req="tel"><label for="tel">電話番号<span class="req">必須</span></label><input type="tel" id="tel" name="tel" autocomplete="tel" inputmode="tel" placeholder="例）090-1234-5678"><div class="msg"><span class="jw">電話番号を<wbr>確かめてください</span></div></div>
+      </div>
+      <div class="nav"><button type="button" class="btn next" data-go="+1">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 2 日時 -->
+  <section class="screen" data-step="2">
+    <div class="card">
+      <div class="num">STEP 02</div>
+      <h2>ご希望の日時</h2>
+      <p class="why"><span class="jw">候補を<wbr>3つまで<wbr>いただければ、<wbr>こちらの<wbr>予定と<wbr>合わせて<wbr>一度で<wbr>決めやすくなります。</span></p>
+      <div class="field" data-req="slots">
+        <div class="lbl">候補の日時<span class="req">必須</span></div>
+        <p class="hint"><span class="jw">第1希望は<wbr>必ず、<wbr>第2・第3希望は<wbr>あれば。<wbr>明日以降の<wbr>日付を<wbr>選んでください<wbr>（30分ほど）。</span></p>
+        <div id="slots"></div>
+        <div class="msg"><span class="jw">第1希望の<wbr>日付を<wbr>選んでください<wbr>（明日以降）</span></div>
+      </div>
+      <div class="field">
+        <div class="lbl">面談の形<span class="opt">任意</span></div>
+        <div class="pills" id="style"></div>
+      </div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 3 事業の構想 -->
+  <section class="screen" data-step="3">
+    <div class="card">
+      <div class="num">STEP 03</div>
+      <h2>事業の構想</h2>
+      <p class="why"><span class="jw">どんな<wbr>事業を、どの<wbr>段階で、<wbr>どこで<wbr>始めるのか。<wbr>前提が<wbr>分かる<wbr>ほど、<wbr>当日の<wbr>話を<wbr>具体的に<wbr>できます。</span></p>
+      <div class="field">
+        <div class="lbl">事業の種類<span class="opt">任意・いくつでも</span></div>
+        <div class="pills" id="biz"></div>
+        <input type="text" name="bizOther" style="margin-top:10px" placeholder="その他・補足があれば（例）訪問看護＋相談支援の併設">
+      </div>
+      <div class="row2">
+        <div class="field"><label for="stage">今の段階<span class="opt">任意</span></label><select id="stage" name="stage"></select></div>
+        <div class="field"><label for="timing">開業（予定）の時期<span class="opt">任意</span></label><input type="text" id="timing" name="timing" placeholder="例）2027年4月ごろ"></div>
+      </div>
+      <div class="field"><label for="area">事業のエリア<span class="opt">任意</span></label><input type="text" id="area" name="area" placeholder="例）福岡市東区・糟屋郡"></div>
+      <div class="field"><label for="concept"><span class="jw">事業の<wbr>コンセプト・大切に<wbr>したい<wbr>こと</span><span class="opt">任意</span></label>
+        <p class="hint"><span class="jw">誰の、<wbr>どんな<wbr>困りごとを、<wbr>どう<wbr>解決したいか。<wbr>一言で<wbr>表すと<wbr>何か。</span></p>
+        <textarea id="concept" name="concept" maxlength="1500" placeholder="例）退院直後の不安が大きい時期に、リハビリと看護を一体で支え、在宅生活の立ち上がりを早める。"></textarea></div>
+      <div class="field"><label for="strength"><span class="jw">ご自身の<wbr>強み・ほかとの<wbr>違い</span><span class="opt">任意</span></label>
+        <textarea id="strength" name="strength" maxlength="1000" placeholder="例）立ち上げから多店舗展開までの現場経験。MBA で学んだ数字の見方。"></textarea></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 4 将来の展望 -->
+  <section class="screen" data-step="4">
+    <div class="card">
+      <div class="num">STEP 04</div>
+      <h2>将来の展望</h2>
+      <p class="why"><span class="jw">目指す姿に<wbr>よって、<wbr>今やるべきこと・やらなくていいことが<wbr>変わります。<wbr>ゴールから<wbr>逆算してお話しする<wbr>ためです。</span></p>
+      <div class="timeline">
+        <div class="field"><span class="when">3 YEARS</span><label for="vision3">3年後に目指す姿<span class="opt">任意</span></label>
+          <p class="hint"><span class="jw">事業所の<wbr>規模、<wbr>チームの<wbr>姿、<wbr>地域での<wbr>立ち位置など。</span></p>
+          <textarea id="vision3" name="vision3" maxlength="1500" placeholder="例）1事業所を黒字で安定させ、2か所目の準備に入っている。紹介元から「困ったらあそこ」と言われる。"></textarea></div>
+        <div class="field far"><span class="when">5–10 YEARS</span><label for="visionLong"><span class="jw">5〜10年後の<wbr>展望・地域で<wbr>果たしたい<wbr>役割</span><span class="opt">任意</span></label>
+          <textarea id="visionLong" name="visionLong" maxlength="1500" placeholder="例）訪問看護を核に、相談支援・就労までつながる仕組みを地域につくる。"></textarea></div>
+      </div>
+      <div class="field"><label for="numbers">数字の目標<span class="opt">任意</span></label>
+        <p class="hint"><span class="jw">売上・利用者数・職員数・事業所数など、<wbr>決まっている<wbr>範囲で。</span></p>
+        <input type="text" id="numbers" name="numbers" maxlength="400" placeholder="例）3年で職員15名・利用者100名・2事業所"></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 5 経営の課題 -->
+  <section class="screen" data-step="5">
+    <div class="card">
+      <div class="num">STEP 05</div>
+      <h2>経営の課題</h2>
+      <p class="why"><span class="jw">気に<wbr>なっている<wbr>所が<wbr>分かれば、<wbr>私たちが<wbr>実際に<wbr>つまずいた<wbr>経験から、<wbr>近い<wbr>ものを<wbr>選んで<wbr>お話しできます。</span></p>
+      <div class="field">
+        <div class="lbl">気になっていること<span class="opt">任意・いくつでも</span></div>
+        <div class="pills" id="issues"></div>
+      </div>
+      <div class="field"><label for="issueMain"><span class="jw">いま、<wbr>いちばん<wbr>悩んでいる<wbr>こと</span><span class="opt">任意</span></label>
+        <p class="hint"><span class="jw">「何が」<wbr>「なぜ」<wbr>引っかかっているのか。<wbr>状況が<wbr>分かる<wbr>数字が<wbr>あれば<wbr>一緒に。</span></p>
+        <textarea id="issueMain" name="issueMain" maxlength="1500" placeholder="例）開業初年度の資金計画。何か月で単月黒字になる見込みで組むべきか、判断の物差しがない。"></textarea></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 6 当日のテーマ -->
+  <section class="screen" data-step="6">
+    <div class="card">
+      <div class="num">STEP 06</div>
+      <h2>当日のテーマ</h2>
+      <p class="why"><span class="jw">30分は<wbr>思いの<wbr>ほか<wbr>短い<wbr>時間です。<wbr>優先順位を<wbr>決めて<wbr>おくと、<wbr>いちばん<wbr>聞きたい<wbr>ことから<wbr>確実に<wbr>お話しできます。</span></p>
+      <div class="field" data-req="questions"><label for="questions">当日特に伺いたいこと<span class="req">必須</span></label>
+        <p class="hint"><span class="jw">優先順に、<wbr>3つまでが<wbr>おすすめです。</span></p>
+        <textarea id="questions" name="questions" maxlength="1500" placeholder="例）&#10;1. 開業1年目にいちばん苦労したこと&#10;2. 職員が辞めない組織づくりで効いた工夫&#10;3. 紹介元との関係のつくり方"></textarea>
+        <div class="msg"><span class="jw">当日特に<wbr>伺いたい<wbr>ことを<wbr>入れてください</span></div></div>
+      <div class="field"><label for="goal"><span class="jw">面談の<wbr>あと、<wbr>どうなっていたいか</span><span class="opt">任意</span></label>
+        <input type="text" id="goal" name="goal" maxlength="600" placeholder="例）初年度の資金計画の考え方に、自分なりの物差しを持てている"></div>
+      <div class="field"><label for="note"><span class="jw">その<wbr>他、<wbr>前もって<wbr>伝えて<wbr>おきたい<wbr>こと</span><span class="opt">任意</span></label>
+        <textarea id="note" name="note" maxlength="1000" style="min-height:90px"></textarea></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">内容を確かめる　→</button></div>
+    </div>
+  </section>
+
+  <!-- 7 確認 -->
+  <section class="screen" data-step="7">
+    <div class="card">
+      <div class="num">CONFIRM</div>
+      <h2>内容のご確認</h2>
+      <p class="hint"><span class="jw">直したい<wbr>ところは<wbr>「直す」から<wbr>戻れます。</span></p>
+      <div class="sum" id="sum"></div>
+      <div class="note">
+        <span class="jw">当日は、<wbr>はるうたの<wbr>経営の<wbr>経験と<wbr>考え方を<wbr>お話しします。<wbr>利用者様・職員に<wbr>関する<wbr>個別の<wbr>情報や、<wbr>ほかの<wbr>事業所の<wbr>内部情報には<wbr>お答えできませんので、<wbr>あらかじめご了承ください。</span><br>
+        <span class="jw">ご記入の<wbr>内容は、<wbr>日程の<wbr>調整と<wbr>当日の<wbr>準備の<wbr>ためにだけ<wbr>使います。<wbr>取り扱いは</span><a href="https://houkan-haruuta.com/privacy-policy.html" target="_blank" rel="noopener">個人情報保護方針</a>のとおりです。
+      </div>
+      <div class="field" data-req="agree"><label class="agree"><input type="checkbox" id="agree"> <span class="jw">上記を<wbr>確認し、<wbr>個人情報の<wbr>取り扱いに<wbr>同意します</span></label><div class="msg"><span class="jw">同意の<wbr>チェックを<wbr>入れてください</span></div></div>
+      <button type="button" class="btn send" id="send">この内容で送信する</button>
+      <div class="errs" id="errs"></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button></div>
+    </div>
+  </section>
+
+  <!-- 8 届いた -->
+  <section class="screen" data-step="8">
+    <div class="card done">
+      <div class="mark"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#2f5444" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+      <h2>ありがとうございました</h2>
+      <p><span class="jw">ヒアリングシートを<wbr>受け付けました。</span><br><span class="jw">内容を<wbr>拝見し、<wbr>日程の<wbr>ご連絡を<wbr>いたします。</span><br><span class="jw">当日<wbr>お会いできるのを<wbr>楽しみに<wbr>しております。</span></p>
+      <p class="hint" style="margin-top:22px"><span class="jw">お急ぎの<wbr>場合は<wbr>お電話で<wbr>（平日 9:00〜18:00）</span></p>
+      <div class="tel"><a href="tel:0924106392">092-410-6392</a><button type="button" class="copy" id="copytel">番号をコピー</button></div>
+    </div>
+  </section>
+</form>
+</main>
+
+<footer><button type="button" class="copy" id="clearDraft" style="display:none;margin-bottom:14px">この端末の下書きを消す</button><br><span class="jw">訪問看護ステーション<wbr>はるうた　TEL 092-410-6392</span><br><a href="https://houkan-haruuta.com/" target="_blank" rel="noopener">houkan-haruuta.com</a></footer>
+<div class="saved" id="saved">下書きを保存しました</div>
+
+<script>
+(function () {
+  var TICKET = "", POST_URL = "https://script.google.com/macros/s/AKfycbzuZs_GW2Y7590414hJqzqzBITVujhpJEwFmEh9Tr-gUa0QRRXiGaGDbeDwx4IwUXd6/exec";
+  var PARTS = ["10:00〜12:00","13:00〜15:00","15:00〜17:00","終日どこでも"], STYLES = ["ご来社（対面）","オンライン","どちらでもよい"], BIZ = ["訪問看護","訪問リハビリ","相談支援・障がい福祉","介護・高齢者支援","コンサルティング・研修","その他"],
+      STAGES = ["構想を練っている段階","準備中（法人設立前）","法人設立済み・指定申請の前","開業して1年未満","開業して1年以上"], ISSUES = ["人材の採用・定着","資金計画・資金繰り","紹介元づくり・営業","制度・報酬・指定申請","組織づくり・理念の浸透","業務の仕組み化・IT","経営者の役割・時間の使い方","その他"];
+  var NAMES = ['ご連絡先', '希望日時', '事業の構想', '将来の展望', '経営の課題', '当日のテーマ'];
+  var KEY = 'haruuta_mendan_draft_v1';
+  var f = document.getElementById('f');
+  var cur = 1, sent = false;
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var newId = function () { var a = new Uint8Array(12); (window.crypto || window.msCrypto).getRandomValues(a); return Array.prototype.map.call(a, function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); };
+  var requestId = newId();
+  var getTicket = function () { return fetch(POST_URL + '?type=form', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (x) { if (x && x.ok) TICKET = x.ticket; }).catch(function () {}); };
+  getTicket();
+
+  // ---- 部品を作る ----
+  var pills = function (id, name, list, multi) {
+    document.getElementById(id).innerHTML = list.map(function (x) {
+      return '<label><input type="' + (multi ? 'checkbox' : 'radio') + '" name="' + name + '" value="' + esc(x) + '"><span>' + esc(x) + '</span></label>';
+    }).join('');
+  };
+  pills('style', 'style', STYLES, false); pills('biz', 'biz', BIZ, true); pills('issues', 'issues', ISSUES, true);
+  document.getElementById('stage').innerHTML = '<option value="">選んでください</option>' + STAGES.map(function (x) { return '<option>' + esc(x) + '</option>'; }).join('');
+  var tmr = new Date(Date.now() + 864e5), pad = function (n) { return ('0' + n).slice(-2); };
+  var minDate = tmr.getFullYear() + '-' + pad(tmr.getMonth() + 1) + '-' + pad(tmr.getDate());
+  document.getElementById('slots').innerHTML = [1, 2, 3].map(function (i) {
+    return '<div class="slot' + (i === 1 ? ' first' : '') + '"><span class="tag">第' + i + '希望</span>' +
+      '<input type="date" name="d' + i + '" min="' + minDate + '" aria-label="第' + i + '希望の日付">' +
+      '<select name="p' + i + '" aria-label="第' + i + '希望の時間帯">' + PARTS.map(function (p) { return '<option>' + esc(p) + '</option>'; }).join('') + '</select></div>';
+  }).join('');
+  document.getElementById('steplist').innerHTML = NAMES.map(function (n, i) {
+    return '<li><button type="button" data-go="' + (i + 1) + '"><span class="n">' + (i + 1) + '</span><span class="t">' + n + '</span></button></li>';
+  }).join('');
+  // 文字数
+  Array.prototype.forEach.call(f.querySelectorAll('textarea[maxlength]'), function (t) {
+    var c = document.createElement('div'); c.className = 'count'; t.parentNode.insertBefore(c, t.nextSibling);
+    var up = function () { c.textContent = t.value.length + ' / ' + t.getAttribute('maxlength'); }; t.addEventListener('input', up); t._up = up; up();
+  });
+
+  // ---- 集める ----
+  var val = function (n) { var el = f.elements[n]; return el ? String(el.value || '').trim() : ''; };
+  var checked = function (n) { return Array.prototype.filter.call(f.querySelectorAll('input[name="' + n + '"]'), function (x) { return x.checked; }).map(function (x) { return x.value; }); };
+  var collect = function () {
+    var slots = [];
+    [1, 2, 3].forEach(function (i) { var d = val('d' + i); if (d) slots.push({ date: d, part: val('p' + i) }); });
+    return {
+      form: 'mendan', name: val('name'), kana: val('kana'), org: val('org'), role: val('role'), email: val('email'), tel: val('tel'),
+      slots: slots, style: checked('style')[0] || '', biz: checked('biz'), bizOther: val('bizOther'), stage: val('stage'), timing: val('timing'),
+      area: val('area'), concept: val('concept'), strength: val('strength'), vision3: val('vision3'), visionLong: val('visionLong'),
+      numbers: val('numbers'), issues: checked('issues'), issueMain: val('issueMain'), questions: val('questions'), goal: val('goal'), note: val('note')
+    };
+  };
+
+  // ---- 下書き（この端末だけ。使えなくても動く。共有の端末で次の人に見せないよう7日で消す：猪八戒 11/3） ----
+  var DRAFT_MAX_MS = 7 * 864e5;
+  var toastT;
+  var save = function () {
+    if (sent) return;
+    try { var d = collect(); d.savedAt = Date.now(); localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) { return; }
+    document.getElementById('clearDraft').style.display = '';
+    var s = document.getElementById('saved'); s.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(function () { s.classList.remove('show'); }, 1400);
+  };
+  var restore = function () {
+    var d; try { d = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { d = null; }
+    if (!d) return;
+    if (!(Date.now() - (d.savedAt || 0) < DRAFT_MAX_MS)) { try { localStorage.removeItem(KEY); } catch (e) {} return; }
+    document.getElementById('clearDraft').style.display = '';
+    ['name', 'kana', 'org', 'role', 'email', 'tel', 'bizOther', 'stage', 'timing', 'area', 'concept', 'strength', 'vision3', 'visionLong', 'numbers', 'issueMain', 'questions', 'goal', 'note']
+      .forEach(function (k) { if (f.elements[k] && d[k]) f.elements[k].value = d[k]; });
+    (d.slots || []).forEach(function (s, i) { if (f.elements['d' + (i + 1)] && s.date >= minDate) { f.elements['d' + (i + 1)].value = s.date; f.elements['p' + (i + 1)].value = s.part; } });
+    var mark = function (n, list) { Array.prototype.forEach.call(f.querySelectorAll('input[name="' + n + '"]'), function (x) { x.checked = list.indexOf(x.value) >= 0; }); };
+    mark('style', d.style ? [d.style] : []); mark('biz', d.biz || []); mark('issues', d.issues || []);
+    Array.prototype.forEach.call(f.querySelectorAll('textarea'), function (t) { if (t._up) t._up(); });
+  };
+  document.getElementById('clearDraft').addEventListener('click', function () {
+    if (!confirm('この端末に保存した下書きを消して、入力欄を空にします。よろしいですか？')) return;
+    clearTimeout(saveT); try { localStorage.removeItem(KEY); } catch (e) {}
+    f.reset(); Array.prototype.forEach.call(f.querySelectorAll('textarea'), function (t) { if (t._up) t._up(); });
+    this.style.display = 'none'; show(1);
+  });
+  restore();
+  var saveT; f.addEventListener('input', function () { clearTimeout(saveT); saveT = setTimeout(save, 900); });
+  f.addEventListener('change', function () { clearTimeout(saveT); saveT = setTimeout(save, 300); });
+
+  // ---- 確かめ ----
+  var RULES = {
+    name: function (d) { return !!d.name; }, kana: function (d) { return !!d.kana; },
+    email: function (d) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email); },
+    tel: function (d) { return /^[0-9０-９\-－ー()（）+ ]{10,}$/.test(d.tel); },
+    slots: function (d) { return d.slots.some(function (s) { return s.date >= minDate; }); },
+    questions: function (d) { return !!d.questions; }
+  };
+  var check = function (step) {
+    var d = collect(), ok = true, first = null;
+    Array.prototype.forEach.call(document.querySelectorAll('.screen[data-step="' + step + '"] [data-req]'), function (box) {
+      var r = RULES[box.getAttribute('data-req')]; if (!r) return;
+      var good = r(d); box.classList.toggle('bad', !good);
+      if (!good) { ok = false; if (!first) first = box; }
+    });
+    if (first) { first.scrollIntoView({ behavior: 'smooth', block: 'center' }); var i = first.querySelector('input,textarea,select'); if (i) i.focus({ preventScroll: true }); }
+    return ok;
+  };
+
+  // ---- 画面の切り替え ----
+  var show = function (n) {
+    cur = n;
+    Array.prototype.forEach.call(document.querySelectorAll('.screen'), function (s) { s.classList.toggle('on', +s.getAttribute('data-step') === n); });
+    Array.prototype.forEach.call(document.querySelectorAll('#steplist button'), function (b) {
+      var k = +b.getAttribute('data-go'); b.classList.toggle('on', k === n); b.classList.toggle('done', k < n);
+    });
+    document.getElementById('bar').style.width = Math.min(100, (n - 1) / 7 * 100) + '%';
+    if (n === 7) renderSum();
+    document.querySelector('.steps').style.display = n === 8 ? 'none' : '';
+    window.scrollTo({ top: n === 1 ? 0 : document.querySelector('main').offsetTop - 70, behavior: 'smooth' });
+  };
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-go]'); if (!b || sent) return;
+    var g = b.getAttribute('data-go'), n = g === '+1' ? cur + 1 : g === '-1' ? cur - 1 : +g;
+    if (n > cur) { for (var s = cur; s < n; s++) { if (!check(s)) { if (s !== cur) show(s); return; } } }
+    show(Math.max(1, Math.min(7, n)));
+  });
+
+  // ---- 送る前の確認 ----
+  var renderSum = function () {
+    var d = collect(), WD = '日月火水木金土';
+    var slotTxt = d.slots.filter(function (s) { return s.date >= minDate; }).map(function (s, i) {
+      var t = new Date(s.date + 'T00:00:00'); return '第' + (i + 1) + '希望　' + (t.getMonth() + 1) + '月' + t.getDate() + '日（' + WD[t.getDay()] + '）' + s.part;
+    }).join('\n');
+    var G = [
+      [1, 'ご連絡先', [['お名前', d.name + (d.kana ? '（' + d.kana + '）' : '')], ['所属・肩書き', [d.org, d.role].filter(Boolean).join('　')], ['メール', d.email], ['電話', d.tel]]],
+      [2, 'ご希望の日時', [['候補', slotTxt], ['面談の形', d.style]]],
+      [3, '事業の構想', [['事業の種類', d.biz.concat(d.bizOther ? [d.bizOther] : []).join('、')], ['今の段階', d.stage], ['開業の時期', d.timing], ['エリア', d.area], ['コンセプト', d.concept], ['強み', d.strength]]],
+      [4, '将来の展望', [['3年後', d.vision3], ['5〜10年後', d.visionLong], ['数字の目標', d.numbers]]],
+      [5, '経営の課題', [['気になること', d.issues.join('、')], ['いちばんの悩み', d.issueMain]]],
+      [6, '当日のテーマ', [['伺いたいこと', d.questions], ['面談のゴール', d.goal], ['その他', d.note]]]
+    ];
+    document.getElementById('sum').innerHTML = G.map(function (g) {
+      return '<h3>' + g[1] + '<button type="button" data-go="' + g[0] + '">直す</button></h3><dl>' + g[2].map(function (r) {
+        return '<dt>' + r[0] + '</dt><dd' + (r[1] ? '' : ' class="none"') + '>' + esc(r[1] || '（なし）') + '</dd>';
+      }).join('') + '</dl>';
+    }).join('');
+  };
+
+  // ---- 送信 ----
+  var btn = document.getElementById('send'), errs = document.getElementById('errs');
+  btn.addEventListener('click', function () {
+    var agreeBox = document.querySelector('[data-req="agree"]'), ag = document.getElementById('agree').checked;
+    agreeBox.classList.toggle('bad', !ag); if (!ag) return;
+    for (var s = 1; s <= 6; s++) { if (!check(s)) { show(s); setTimeout(function () { check(cur); }, 400); return; } }
+    var data = collect(); data.agree = true; data.ticket = TICKET; data.requestId = requestId; data.website = val('website');
+    btn.disabled = true; btn.textContent = '送信しています…'; errs.style.display = 'none';
+    (TICKET ? Promise.resolve() : getTicket()).then(function () { data.ticket = TICKET; return fetch(POST_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) }); })
+      .then(function (r) { return r.json(); })
+      .then(function (x) {
+        if (x && x.ok) { sent = true; try { localStorage.removeItem(KEY); } catch (e) {} show(8); return; }
+        errs.innerHTML = esc(((x && x.errors) || ['送信できませんでした']).join('\n')).replace(/\n/g, '<br>'); errs.style.display = 'block';
+      })
+      .catch(function () {
+        errs.innerHTML = '通信がうまくいきませんでした。少し待ってもう一度押すか、お電話（092-410-6392）でご連絡ください。<br>書いた内容はこの端末に残っています。'; errs.style.display = 'block';
+      })
+      .then(function () { if (!sent) { btn.disabled = false; btn.textContent = 'この内容で送信する'; } });
+  });
+
+  document.getElementById('copytel').addEventListener('click', function () {
+    var b = this, done = function () { b.textContent = 'コピーしました'; setTimeout(function () { b.textContent = '番号をコピー'; }, 1600); };
+    try { navigator.clipboard.writeText('092-410-6392').then(done, done); } catch (e) { done(); }
+  });
+
+  show(1);
+})();
+</script>
+</body>
+</html>
