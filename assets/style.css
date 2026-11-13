@@ -644,3 +644,8 @@ mark.tbc{background:#fff3c4;color:#7a5200;border-radius:6px;padding:1px 6px;font
 .policy h3{font-size:.98rem;margin:1.2em 0 .4em}
 .policy ul{margin:.3em 0 .8em}
 .policy li{font-size:.95rem;line-height:1.85;margin:.15em 0}
+
+/* お子様の発達支援: ご自宅でしていることの例（2026-11-13） */
+.kids-h{margin:18px 0 8px;font-size:1rem;color:var(--deep);font-weight:500}
+.kids-do{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.kids-do li{font-size:.95rem;line-height:1.7}
