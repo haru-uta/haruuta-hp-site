@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>適性検査｜訪問看護ステーションはるうた</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Zen+Old+Mincho:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbfcfa; --white:#fff; --ink:#3a4741; --muted:#5d6e66; --sage:#7fa08c; --sage-soft:#edf3ee; --sage-ink:#4e7460;
+  --mist:#e4eeee; --deep:#2f5444; --line:#dbe5de; --blush:#f7ecea; --gold:#b98a3e; --gold-soft:#f6eedd; --err:#a3343f;
+  --good:#2f6b4f; --good-soft:#e3f1e8; --bad:#a3473f; --bad-soft:#f8e6e3;
+  --display:"Zen Old Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+  --body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+  --r:18px; --shadow:0 10px 30px rgba(47,84,68,.08),0 2px 6px rgba(47,84,68,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.8;-webkit-text-size-adjust:100%;word-break:auto-phrase}
+a{color:var(--sage-ink)}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- 見出し ---------- */
+.hero{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(251,252,250,.5),var(--paper) 94%),url(assets/watercolor.jpg) center/cover}
+.hero .wrap{padding-top:34px;padding-bottom:28px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--deep);font-weight:700;letter-spacing:.04em;font-size:15px}
+.brand img{width:46px;height:46px;object-fit:contain}
+.eyebrow{margin:30px 0 6px;font-size:12px;letter-spacing:.32em;color:var(--sage-ink);font-weight:700}
+h1{font-family:var(--display);font-size:clamp(30px,7vw,46px);line-height:1.3;margin:0;color:var(--deep);letter-spacing:.06em}
+.lead{margin:16px 0 0;font-size:16.5px;max-width:34em}
+.lead b{color:var(--deep);background:linear-gradient(transparent 62%,rgba(185,138,62,.22) 62%)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:14px;color:var(--deep)}
+.see{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.see div{background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:14px;padding:12px 12px 10px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.see b{display:flex;align-items:center;gap:6px;font-family:var(--display);color:var(--deep);font-size:16px;margin-bottom:2px}
+.see svg{width:20px;height:20px;flex:none}
+
+/* ---------- 進み具合 ---------- */
+.steps{position:sticky;top:0;z-index:5;background:rgba(251,252,250,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.steps .wrap{padding-top:10px;padding-bottom:10px}
+.steplist{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:0;padding:0;list-style:none}
+.steplist button{width:100%;border:0;background:none;padding:4px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:12px;line-height:1.3}
+.steplist .n{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px;background:var(--white);border:1.5px solid var(--line);transition:.25s}
+.steplist .on .n{background:var(--deep);border-color:var(--deep);color:#fff;box-shadow:0 0 0 5px rgba(47,84,68,.12)}
+.steplist .on{color:var(--deep);font-weight:700}
+.steplist .done .n{background:var(--sage-soft);border-color:var(--sage);color:var(--sage-ink)}
+.bar{height:4px;background:var(--line);border-radius:4px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sage),var(--deep));transition:width .4s}
+.left{font-size:12px;color:var(--muted);text-align:right;margin-top:4px}
+
+/* ---------- 画面 ---------- */
+main{padding:26px 0 40px}
+.screen{display:none;animation:fade .35s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:28px 22px}
+.num{font-family:var(--display);color:var(--sage);font-size:15px;letter-spacing:.2em}
+h2{font-family:var(--display);color:var(--deep);font-size:clamp(22px,5vw,28px);margin:2px 0 6px;line-height:1.45}
+.why{margin:0 0 22px;padding:12px 16px;background:var(--sage-soft);border-radius:12px;font-size:15px;color:var(--sage-ink)}
+.why b{color:var(--deep)}
+.field{margin:0 0 22px}
+label,.lbl{display:block;font-weight:700;color:var(--deep);margin-bottom:6px}
+.req{display:inline-block;margin-left:8px;font-size:12px;color:#fff;background:var(--gold);border-radius:6px;padding:0 7px;vertical-align:2px}
+.opt{display:inline-block;margin-left:8px;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:0 7px;vertical-align:2px}
+.hint{font-size:14px;color:var(--muted);margin:-2px 0 8px}
+input[type=text],input[type=email],input[type=tel],textarea,select.spick{width:100%;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:17px;transition:border .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
+select.spick{margin-bottom:10px;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--sage-ink) 50%),linear-gradient(135deg,var(--sage-ink) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+.bad select.spick{border-color:var(--err)}
+textarea{min-height:130px;resize:vertical;line-height:1.75}
+input:focus,textarea:focus{outline:none;border-color:var(--sage);box-shadow:0 0 0 4px rgba(127,160,140,.2);background:#fff}
+.bad input[type=text],.bad input[type=email],.bad input[type=tel],.bad textarea{border-color:var(--err)}
+.msg{display:none;color:var(--err);font-size:14px;margin-top:6px}
+.bad>.msg,.bad .msg.own{display:block}
+.count{text-align:right;font-size:12px;color:var(--muted);margin-top:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* 選ぶボタン */
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.pills label{position:relative;cursor:pointer;margin:0;font-weight:400}
+.pills input{position:absolute;opacity:0;pointer-events:none}
+.pills span{display:inline-block;padding:10px 18px;border:1.5px solid var(--line);border-radius:999px;background:var(--white);font-size:15.5px;transition:.2s;color:var(--ink)}
+.pills input:checked+span{background:var(--deep);border-color:var(--deep);color:#fff;box-shadow:0 4px 12px rgba(47,84,68,.2)}
+.pills input:focus-visible+span{box-shadow:0 0 0 4px rgba(127,160,140,.35)}
+.bad .pills span{border-color:#e6b9be}
+
+/* ---------- 2 大切にしていること ---------- */
+.vq{border:1.5px solid var(--line);border-radius:16px;padding:16px 14px 14px;margin-bottom:14px;background:var(--paper);transition:border .2s,background .2s}
+.vq.ok{border-color:#cfe0d5;background:#fff}
+.vq.bad{border-color:#e6b9be}
+.vq .vn{font-family:var(--display);color:var(--sage);font-size:13px;letter-spacing:.15em;margin-bottom:6px}
+.vgrid{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
+.vs{font-size:15px;line-height:1.6;padding:10px 12px;border-radius:12px;transition:.25s;color:var(--ink)}
+.vs.a{text-align:right}
+.vs .k{display:block;font-family:var(--display);font-weight:700;font-size:13px;color:var(--sage-ink)}
+.vs.lean{background:var(--sage-soft);color:var(--deep);font-weight:700}
+.track{position:relative;display:flex;gap:8px;align-items:center;padding:0 2px}
+.track::before{content:"";position:absolute;left:14px;right:14px;top:50%;height:2px;background:linear-gradient(90deg,var(--sage),var(--line) 45%,var(--line) 55%,var(--gold));transform:translateY(-50%)}
+.dot{position:relative;border:0;background:none;padding:0;cursor:pointer;width:36px;height:36px;display:grid;place-items:center}
+.dot i{display:block;border-radius:50%;background:#fff;border:2px solid var(--line);transition:.2s}
+.dot.d1 i,.dot.d4 i{width:30px;height:30px}
+.dot.d2 i,.dot.d3 i{width:22px;height:22px}
+.dot:hover i{border-color:var(--sage)}
+.dot[aria-pressed=true] i{background:var(--deep);border-color:var(--deep);box-shadow:0 0 0 5px rgba(47,84,68,.14)}
+.dot.d3[aria-pressed=true] i,.dot.d4[aria-pressed=true] i{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(185,138,62,.18)}
+.dot:focus-visible{outline:3px solid rgba(127,160,140,.5);border-radius:50%}
+.vlegend{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin:2px 4px 0}
+
+/* ---------- 3 場面で考える ---------- */
+.scene-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.sdots{display:flex;gap:6px;flex-wrap:wrap}
+.sdots button{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:#fff;font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer;padding:0;transition:.2s}
+.sdots button.done{background:var(--sage-soft);border-color:var(--sage);color:var(--sage-ink)}
+.sdots button.cur{background:var(--deep);border-color:var(--deep);color:#fff;transform:scale(1.08)}
+.scount{font-family:var(--display);color:var(--deep);font-size:15px;white-space:nowrap}
+.scount b{font-size:26px}
+.scene{animation:slide .35s ease}
+#sceneBox,.screen [data-req],.vq,.rq{scroll-margin-top:130px}
+@keyframes slide{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.sbox{display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:start;background:linear-gradient(135deg,var(--mist),#f4f8f5);border-radius:16px;padding:18px}
+.sicon{width:72px;height:72px;border-radius:20px;background:#fff;display:grid;place-items:center;box-shadow:0 6px 16px rgba(47,84,68,.1)}
+.sicon svg{width:40px;height:40px}
+.stag{display:inline-block;font-size:12px;letter-spacing:.12em;background:#fff;color:var(--sage-ink);border-radius:6px;padding:0 8px;font-weight:700}
+.stitle{font-family:var(--display);color:var(--deep);font-size:clamp(19px,4.4vw,23px);line-height:1.5;margin:4px 0 6px}
+.stext{margin:0;font-size:15.5px}
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0 12px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:5px}
+.mode button{border:0;border-radius:10px;background:none;padding:10px 6px;font-weight:700;font-size:15px;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.mode button .mk{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:#fff}
+.mode .mb .mk{background:var(--good)} .mode .mw .mk{background:var(--bad)}
+.mode button[aria-pressed=true].mb{background:var(--good-soft);color:var(--good);box-shadow:inset 0 0 0 1.5px var(--good)}
+.mode button[aria-pressed=true].mw{background:var(--bad-soft);color:var(--bad);box-shadow:inset 0 0 0 1.5px var(--bad)}
+.mode button .st{font-weight:400;font-size:12.5px;opacity:.85}
+.opts{display:grid;gap:10px}
+.op{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;text-align:left;width:100%;border:1.5px solid var(--line);border-radius:14px;background:#fff;padding:12px 14px;cursor:pointer;font-size:15.5px;line-height:1.6;transition:.18s}
+.op:hover{border-color:var(--sage);transform:translateY(-1px)}
+.op .L{width:34px;height:34px;border-radius:10px;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-family:var(--display);font-weight:700;color:var(--deep)}
+.op .badge{font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap;visibility:hidden}
+.op.best{border-color:var(--good);background:var(--good-soft)}
+.op.best .L{background:var(--good);border-color:var(--good);color:#fff}
+.op.best .badge{visibility:visible;background:var(--good);color:#fff}
+.op.worst{border-color:var(--bad);background:var(--bad-soft)}
+.op.worst .L{background:var(--bad);border-color:var(--bad);color:#fff}
+.op.worst .badge{visibility:visible;background:var(--bad);color:#fff}
+.op:focus-visible{outline:3px solid rgba(127,160,140,.55);outline-offset:2px}
+.op.pop{animation:pop .3s ease}
+@keyframes pop{50%{transform:scale(1.015)}}
+.snav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}
+.snav .state{font-size:14px;color:var(--muted)}
+.snav .state.ok{color:var(--good);font-weight:700}
+
+/* ---------- 4 ふり返り ---------- */
+.safe{display:flex;gap:12px;align-items:flex-start;background:var(--gold-soft);border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:15px;color:#6b5020}
+.safe svg{flex:none;width:26px;height:26px;margin-top:2px}
+.rq{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.rq:last-of-type{border-bottom:0}
+.rq .ri{width:40px;height:40px;border-radius:12px;background:var(--mist);display:grid;place-items:center}
+.rq .ri svg{width:24px;height:24px}
+.rq p{margin:0 0 8px;font-size:15.5px;line-height:1.6}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.seg label{margin:0;position:relative;cursor:pointer;font-weight:400}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;text-align:center;padding:8px 2px;font-size:14px;border-left:1px solid var(--line);transition:.2s}
+.seg label:first-child span{border-left:0}
+.seg input:checked+span{background:var(--deep);color:#fff;font-weight:700}
+.seg input:focus-visible+span{box-shadow:inset 0 0 0 3px rgba(127,160,140,.6)}
+.rq.bad .seg{border-color:#e6b9be}
+#reflectNoteBox{display:none;margin-top:16px;padding:16px;border-radius:14px;background:var(--sage-soft);animation:fade .35s ease}
+#reflectNoteBox.show{display:block}
+
+/* ---------- 5 ことばで ---------- */
+.eq{margin-bottom:26px}
+.eq .en{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--deep);color:#fff;font-weight:700;font-size:14px;margin-right:8px;vertical-align:1px}
+.case{position:relative;background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:14px 16px;margin:4px 0 12px;font-size:15px}
+.case b{display:block;font-family:var(--display);color:#8a6420;font-size:13px;letter-spacing:.15em}
+
+/* ---------- 6 お約束 ---------- */
+.prom{display:grid;gap:8px}
+.pr{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;background:#fff;margin:0;font-weight:400;transition:.2s;color:var(--ink);font-size:15.5px;line-height:1.6}
+.pr input{position:absolute;opacity:0;pointer-events:none}
+.pr .bx{width:28px;height:28px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;transition:.2s;background:#fff}
+.pr .bx svg{width:18px;height:18px;opacity:0;transition:.2s}
+.pr.on{border-color:var(--sage);background:var(--sage-soft)}
+.pr.on .bx{background:var(--deep);border-color:var(--deep)}
+.pr.on .bx svg{opacity:1}
+.pr:focus-within{box-shadow:0 0 0 4px rgba(127,160,140,.3)}
+.ptally{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:14px;color:var(--muted)}
+.ptally b{font-family:var(--display);color:var(--deep);font-size:20px}
+.bad .prom .pr:not(.on){border-color:#e6b9be}
+
+/* 送る前の確認 */
+.sum h3{font-family:var(--display);color:var(--deep);font-size:18px;margin:24px 0 8px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:4px}
+.sum h3 button{border:0;background:none;color:var(--sage-ink);font-size:14px;cursor:pointer;text-decoration:underline}
+.sum dl{margin:0;display:grid;grid-template-columns:10em 1fr;gap:6px 14px;font-size:15px}
+.sum dt{color:var(--muted)}
+.sum dd{margin:0;white-space:pre-wrap;word-break:break-word}
+.sum dd.none{color:#a5b1ab}
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.mini span{font-size:13.5px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:4px 8px}
+.mini i{font-style:normal;font-weight:700}
+.mini .g{color:var(--good)} .mini .w{color:var(--bad)}
+.note{font-size:14.5px;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:20px 0}
+.agree{display:flex;gap:12px;align-items:flex-start;font-weight:700;color:var(--deep);cursor:pointer}
+.agree input{width:24px;height:24px;margin-top:3px;accent-color:var(--deep);flex:none}
+
+/* 送りボタン */
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+.btn{border:0;border-radius:999px;padding:15px 28px;font-weight:700;font-size:17px;cursor:pointer;transition:.2s}
+.btn.next{background:var(--deep);color:#fff;margin-left:auto;box-shadow:0 8px 18px rgba(47,84,68,.22)}
+.btn.next:hover{transform:translateY(-1px)}
+.btn.next.soft{background:#fff;color:var(--deep);border:1.5px solid var(--deep);box-shadow:none}
+.btn.back{background:none;color:var(--sage-ink);border:1.5px solid var(--line)}
+.btn.send{background:linear-gradient(135deg,var(--deep),#3e6b57);color:#fff;width:100%;font-size:19px;padding:18px;box-shadow:0 10px 24px rgba(47,84,68,.28)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.send:disabled{cursor:wait}
+.errs{display:none;background:var(--blush);color:var(--err);border-radius:12px;padding:12px 16px;margin-top:14px;font-size:15px}
+
+/* 届いた */
+.done{text-align:center;padding:44px 22px}
+.done .mark{width:84px;height:84px;margin:0 auto 14px;border-radius:50%;background:var(--sage-soft);display:grid;place-items:center;animation:pop .6s ease}
+.tel{display:inline-flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap;justify-content:center}
+.tel a{font-size:30px;font-weight:700;color:var(--deep);text-decoration:none;letter-spacing:.04em}
+.copy{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer;color:var(--sage-ink)}
+
+.resume{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;background:var(--gold-soft);border:1px solid #ead8b4;border-radius:14px;padding:14px 16px;margin-bottom:18px;color:#6b5020;font-size:15px}
+.resume[hidden]{display:none}
+.resume .rb{display:flex;gap:8px;flex-wrap:wrap}
+.resume button{border-radius:999px;padding:8px 16px;font-weight:700;font-size:14.5px;cursor:pointer;border:1.5px solid var(--deep)}
+.resume .go{background:var(--deep);color:#fff}
+.resume .no{background:#fff;color:var(--deep);border-color:var(--line)}
+h2:focus{outline:none}
+.saved{position:fixed;left:50%;bottom:18px;transform:translate(-50%,30px);opacity:0;background:var(--deep);color:#fff;padding:8px 18px;border-radius:999px;font-size:14px;transition:.3s;pointer-events:none;z-index:9}
+.saved.show{opacity:.92;transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13.5px;text-align:center}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+@media (max-width:620px){
+  html,body{font-size:16px}
+  .card{padding:22px 16px}
+  .steplist .t{display:none}
+  .row2{grid-template-columns:1fr}
+  .see{grid-template-columns:1fr}
+  .vgrid{grid-template-columns:1fr;gap:6px}
+  .vs.a,.vs.b{text-align:left}
+  .track{justify-content:space-between;padding:4px 6px}
+  .sbox{grid-template-columns:1fr;gap:10px;padding:16px}
+  .sicon{width:56px;height:56px;border-radius:16px}
+  .sicon svg{width:32px;height:32px}
+  .mode button{font-size:14px;flex-direction:column;gap:2px}
+  .op{grid-template-columns:30px 1fr;padding:12px}
+  .op .L{width:30px;height:30px}
+  .op .badge{grid-column:2;justify-self:start}
+  .op:not(.best):not(.worst) .badge{display:none}
+  .sdots{gap:5px}
+  .sdots button{width:27px;height:27px;font-size:12px}
+  .snav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .snav .state{grid-column:1/-1;grid-row:1;text-align:center}
+  .snav .btn{padding:12px 10px;font-size:15px;white-space:nowrap}
+  .snav .btn.next{margin-left:0}
+  .rq{grid-template-columns:1fr}
+  .rq .ri{display:none}
+  .sum dl{grid-template-columns:1fr;gap:0}
+  .sum dd{margin-bottom:10px}
+  .btn{padding:14px 22px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><img src="assets/logo_s.webp" alt="">訪問看護ステーションはるうた</div>
+    <p class="eyebrow">APTITUDE CHECK</p>
+    <h1>はるうたの<br>適性検査</h1>
+    <p class="lead">正解を当てる試験ではありません。<br><b>あなたが現場で、どう考え、どう動く人なのか</b>を知り、面接でじっくりお話しするためのものです。</p>
+    <div class="chips">
+      <span class="chip">所要 約20分</span>
+      <span class="chip">全6ステップ・11の場面</span>
+      <span class="chip">書きかけはこの端末に7日間保存</span>
+    </div>
+    <div class="see" id="see"></div>
+  </div>
+</header>
+
+<nav class="steps" aria-label="進み具合">
+  <div class="wrap">
+    <ol class="steplist" id="steplist"></ol>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="left" id="left"></div>
+  </div>
+</nav>
+
+<main class="wrap">
+<div class="resume" id="resume" hidden role="region" aria-label="書きかけ"><span id="resumeText"><span class="jw">この<wbr>端末に、<wbr>書きかけの<wbr>適性検査が<wbr>あります。</span></span><span class="rb"><button type="button" class="go" id="resumeGo">続きから</button><button type="button" class="no" id="resumeNo">消して最初から</button></span></div>
+<div class="hp" role="alert" aria-live="assertive" id="sr"></div>
+<form id="f" novalidate autocomplete="on">
+  <div class="hp" aria-hidden="true"><label>ウェブサイト<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+  <!-- 1 あなたについて -->
+  <section class="screen" data-step="1">
+    <div class="card">
+      <div class="num">STEP 01</div>
+      <h2 tabindex="-1">あなたについて</h2>
+      <p class="why"><span class="jw">面接の<wbr>ご連絡と、<wbr>お答えを<wbr>読む<wbr>ときの<wbr>手が<wbr>かりにします。</span></p>
+      <div class="row2">
+        <div class="field" data-req="name"><label for="name">お名前<span class="req">必須</span></label><input type="text" id="name" name="name" autocomplete="name" maxlength="60" placeholder="例）春野 歌子"><div class="msg">お名前を入れてください</div></div>
+        <div class="field" data-req="kana"><label for="kana">ふりがな<span class="req">必須</span></label><input type="text" id="kana" name="kana" maxlength="60" placeholder="例）はるの うたこ"><div class="msg"><span class="jw">ふりがなを<wbr>入れてください</span></div></div>
+      </div>
+      <div class="row2">
+        <div class="field" data-req="email"><label for="email">メールアドレス<span class="req">必須</span></label><input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="120" placeholder="example@mail.com"><div class="msg"><span class="jw">メールアドレスの<wbr>形を<wbr>確かめてください</span></div></div>
+        <div class="field" data-req="tel"><label for="tel">電話番号<span class="req">必須</span></label><input type="tel" id="tel" name="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="例）090-1234-5678"><div class="msg"><span class="jw">電話番号を<wbr>確かめてください</span></div></div>
+      </div>
+      <div class="field" data-req="job"><div class="lbl">職種<span class="req">必須</span></div><div class="pills" id="job" role="radiogroup" aria-label="職種"></div>
+        <input type="text" id="jobOther" name="jobOther" maxlength="40" placeholder="「その他」の方は職種を" style="margin-top:10px;display:none"><div class="msg">職種を選んでください</div></div>
+      <div class="field" data-req="psy"><div class="lbl"><span class="jw">精神科<wbr>（訪問・病棟など）での<wbr>経験</span><span class="req">必須</span></div><div class="pills" id="psy" role="radiogroup" aria-label="精神科（訪問・病棟など）での経験"></div><div class="msg">選んでください</div></div>
+      <div class="field" data-req="drive"><div class="lbl">ふだんの運転<span class="req">必須</span></div><p class="hint">訪問は車で回ります。</p><div class="pills" id="drive" role="radiogroup" aria-label="ふだんの運転"></div><div class="msg">選んでください</div></div>
+      <div class="field" data-req="phone"><div class="lbl">電話での対応<span class="req">必須</span></div><div class="pills" id="phone" role="radiogroup" aria-label="電話での対応"></div><div class="msg">選んでください</div></div>
+      <div class="nav"><button type="button" class="btn next" data-go="+1">はじめる　→</button></div>
+    </div>
+  </section>
+
+  <!-- 2 大切にしていること -->
+  <section class="screen" data-step="2">
+    <div class="card">
+      <div class="num">STEP 02</div>
+      <h2 tabindex="-1">大切にしていること</h2>
+      <p class="why"><span class="jw">どちらも<wbr>大事な<wbr>考え方です。</span><b>あなたがふだん近いほう</b><span class="jw">に、<wbr>丸を<wbr>寄せてください。</span></p>
+      <div id="values"></div>
+      <div class="msg own" id="valuesMsg" style="display:none"><span class="jw">まだ<wbr>選んでいない<wbr>問いが<wbr>あります</span></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 3 場面で考える -->
+  <section class="screen" data-step="3">
+    <div class="card">
+      <div class="num">STEP 03</div>
+      <h2 tabindex="-1">場面で考える</h2>
+      <p class="why"><span class="jw">訪問の<wbr>現場で<wbr>実際に<wbr>起こりうる<wbr>場面です。<wbr>それぞれ</span><b>「いちばん良い」</b>と<b>「いちばん避けたい」</b><span class="jw">を<wbr>1つずつ<wbr>選んでください。</span></p>
+      <div class="scene-head"><div class="sdots" id="sdots" aria-label="場面の一覧"></div><div class="scount" id="scount"></div></div>
+      <div id="sceneBox"></div>
+      <div class="msg own" id="scenesMsg" style="display:none"><span class="jw">まだ<wbr>選び終えていない<wbr>場面が<wbr>あります<wbr>（番号の<wbr>丸が<wbr>白い<wbr>ところ）</span></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1" id="sceneNext">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 4 ふり返り -->
+  <section class="screen" data-step="4">
+    <div class="card">
+      <div class="num">STEP 04</div>
+      <h2 tabindex="-1">ふり返り</h2>
+      <p class="why"><b>この1年ほどのお仕事</b><span class="jw">で<wbr>（前の<wbr>職場を<wbr>含みます）、<wbr>次のような<wbr>ことは<wbr>ありましたか。</span></p>
+      <div class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="#8a6420" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        <div><span class="jw">誰に<wbr>でも<wbr>起こりうる<wbr>ことばかりです。<wbr>私たちが<wbr>大切に<wbr>しているのは、</span><b><span class="jw">ゼロである<wbr>ことより、<wbr>気づいて<wbr>工夫できる<wbr>こと</span></b><span class="jw">。<wbr>ありの<wbr>ままに<wbr>お答えください。</span></div></div>
+      <div id="reflect"></div>
+      <div id="reflectNoteBox" data-req="reflectNote">
+        <label for="reflectNote"><span class="jw">「2〜3回」<wbr>「4回以上」と<wbr>答えた<wbr>ものから<wbr>1つ<wbr>選び、<wbr>その<wbr>ときの<wbr>状況と、<wbr>その<wbr>あとの<wbr>工夫を<wbr>書いてください</span><span class="req">必須</span></label>
+        <textarea id="reflectNote" name="reflectNote" maxlength="400" placeholder="例）次の訪問に遅れそうで焦り、信号待ちでスマホを見そうになった。今は、遅れそうなときは停車してから事務所に連絡すると決めている。"></textarea>
+        <div class="msg"><span class="jw">状況と<wbr>工夫を<wbr>書いてください<wbr>（30字以上）</span></div>
+      </div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 5 ことばで -->
+  <section class="screen" data-step="5">
+    <div class="card">
+      <div class="num">STEP 05</div>
+      <h2 tabindex="-1">あなたのことばで</h2>
+      <p class="why"><span class="jw">うまく<wbr>まとめる<wbr>必要は<wbr>ありません。</span><b>ふだん考えていること</b><span class="jw">を、<wbr>そのまま<wbr>書いてください。<wbr>面接では、<wbr>ここに<wbr>書いた<wbr>ことから<wbr>伺います。</span></p>
+      <div id="essays"></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">次へ　→</button></div>
+    </div>
+  </section>
+
+  <!-- 6 お約束 -->
+  <section class="screen" data-step="6">
+    <div class="card">
+      <div class="num">STEP 06</div>
+      <h2 tabindex="-1">はるうたのお約束</h2>
+      <p class="why"><span class="jw">利用者さんと<wbr>チームを<wbr>守る<wbr>ために、<wbr>全員が<wbr>守っている<wbr>約束です。</span><b><span class="jw">すべてに<wbr>同意いただける<wbr>方</span></b><span class="jw">だけ、<wbr>送る<wbr>ことができます。</span></p>
+      <div class="field" data-req="promises">
+        <div class="ptally"><span><span class="jw">1つずつ<wbr>読んで、<wbr>チェックしてください</span></span><span><b id="pcount">0</b> / <span id="ptotal"></span></span></div>
+        <div class="prom" id="prom"></div>
+        <div class="msg"><span class="jw">すべての<wbr>約束に<wbr>チェックが<wbr>必要です</span></div>
+      </div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button><button type="button" class="btn next" data-go="+1">内容を確かめる　→</button></div>
+    </div>
+  </section>
+
+  <!-- 7 確認 -->
+  <section class="screen" data-step="7">
+    <div class="card">
+      <div class="num">CONFIRM</div>
+      <h2 tabindex="-1">内容のご確認</h2>
+      <p class="hint"><span class="jw">直したい<wbr>ところは<wbr>「直す」から<wbr>戻れます。</span></p>
+      <div class="sum" id="sum"></div>
+      <div class="note">
+        <span class="jw">お答えは、<wbr>採用の<wbr>選考の<wbr>ためにだけ<wbr>使い、<wbr>選考を<wbr>担当する<wbr>者だけが<wbr>拝見します。</span><br>
+        書いていただいた文は、<b><span class="jw">お名前・連絡先を<wbr>外したうえで</span></b><span class="jw">、<wbr>AI<wbr>（Google社の<wbr> Gemini。<wbr>海外で<wbr>処理される<wbr>ことがあります）で<wbr>要点を<wbr>整理し、<wbr>担当者が<wbr>読む<wbr>ときの<wbr>参考にします。<wbr>AIの<wbr>学習には<wbr>使われません。</span><b><span class="jw">合否を<wbr>AIが<wbr>決める<wbr>ことは<wbr>ありません。</span></b><br>
+        取り扱いは<a href="https://houkan-haruuta.com/privacy-policy.html" target="_blank" rel="noopener">個人情報保護方針</a>のとおりです。
+      </div>
+      <div class="field" data-req="agree"><label class="agree"><input type="checkbox" id="agree"> <span class="jw">上記を<wbr>確認し、<wbr>個人情報の<wbr>取り扱いに<wbr>同意します</span></label><div class="msg"><span class="jw">同意の<wbr>チェックを<wbr>入れてください</span></div></div>
+      <button type="button" class="btn send" id="send">この内容で送信する</button>
+      <div class="errs" id="errs"></div>
+      <div class="nav"><button type="button" class="btn back" data-go="-1">← 戻る</button></div>
+    </div>
+  </section>
+
+  <!-- 8 届いた -->
+  <section class="screen" data-step="8">
+    <div class="card done">
+      <div class="mark"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#2f5444" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+      <h2 tabindex="-1">おつかれさまでした</h2>
+      <p><span class="jw">適性検査の<wbr>お答えを<wbr>受け付けました。</span><br><span class="jw">じっくり考えてくださって、<wbr>ありがとう<wbr>ございます。</span><br><span class="jw">内容を<wbr>拝見し、<wbr>あらためて<wbr>ご連絡いたします。</span></p>
+      <p class="hint" style="margin-top:22px"><span class="jw">ご不明な点は<wbr>お電話で<wbr>（平日 9:00〜18:00）</span></p>
+      <div class="tel"><a href="tel:0924106392">092-410-6392</a><button type="button" class="copy" id="copytel">番号をコピー</button></div>
+    </div>
+  </section>
+</form>
+</main>
+
+<footer><button type="button" class="copy" id="clearDraft" style="display:none;margin-bottom:14px">この端末の書きかけを消す</button><br><span class="jw">訪問看護ステーション<wbr>はるうた　TEL 092-410-6392</span><br><a href="https://houkan-haruuta.com/" target="_blank" rel="noopener">houkan-haruuta.com</a></footer>
+<div class="saved" id="saved" role="status" aria-live="polite">書きかけを保存しました</div>
+
+<script>
+(function () {
+  var TICKET = "", POST_URL = "https://script.google.com/macros/s/AKfycbzuZs_GW2Y7590414hJqzqzBITVujhpJEwFmEh9Tr-gUa0QRRXiGaGDbeDwx4IwUXd6/exec";
+  var Q = {"version":"2026-11-12.2","jobs":["看護師","准看護師","作業療法士","理学療法士","その他"],"psy":["なし","1年未満","1〜3年","3年以上"],"drive":["ほぼ毎日運転している","ときどき運転する","免許はあるがほとんど運転しない"],"phone":["得意","ふつう","苦手"],"freq":["なかった","1回","2〜3回","4回以上"],"values":[{"id":"v1","a":"迷ったら、早めに相談して安全を優先する","b":"まず自分で整理してから、必要な範囲で相談する"},{"id":"v6","a":"ルールは、信頼を守るために厳密に守る","b":"ルールは、現場の状況に合わせて柔軟に運用する"},{"id":"v7","a":"利用者との距離は、一定に保つほうが長く安定する","b":"利用者との距離が近いほうが、信頼を作りやすい"},{"id":"v8","a":"感情が動いたときほど、間を取って話す","b":"感情が動いたときほど、率直に伝えることも必要"},{"id":"v16","a":"新しい職場では、まずその職場の文化を知る","b":"新しい職場では、改善点を早めに提案する"},{"id":"v18","a":"睡眠・体調・段取りの自己管理も、仕事のうち","b":"必要な時期は、多少の負担があってもやり切る"},{"id":"v20","a":"私的な連絡・金銭・私的な関係の線は、はっきり保つ","b":"柔軟に対応することで、信頼が増える場合もある"},{"id":"v25","a":"スタッフ間で方針をそろえて、関わりを統一する","b":"担当者の判断で、その利用者さんに合わせて関わり方を変える"}],"scenes":[{"id":"s02","icon":"car","tag":"移動","title":"予定が押して、焦ってしまいそう","text":"前の訪問が長引き、次の訪問の時間が迫っています。気持ちが焦ってきました。","opts":["到着が遅れるかもしれないと伝え、安全運転のまま向かう","遅れる連絡を入れたうえで、少しでも早く着くよう抜け道を急ぐ","今の訪問を早めに切り上げて、次の訪問に間に合わせる","いったん停車して整理し、必要なら訪問の順番の変更を相談する"]},{"id":"s05","icon":"mail","tag":"情報","title":"送り先を間違えたかもしれない","text":"利用者さんの情報を送ったあと、宛先が違ったかもしれないと気づきました。確証はありませんが、違和感があります。","opts":["まず送信の記録を確かめ、違っていればすぐに報告する","相手が気づくまで待つ","まず上長に相談し、指示に沿って回収・訂正を進める","取り急ぎ相手に連絡して削除を頼み、上長への共有はあとにする"]},{"id":"s06","icon":"compass","tag":"チーム","title":"関わり方を大きく変えたい","text":"担当している利用者さんへの関わりの方向を変えたいと考えています。まだカンファレンスの前です。","opts":["自分の考えをまとめ、カンファレンスで合意してから変える","まず試してみて、結果が出てから共有する","先輩1人にだけ相談して進める","変えるのはリスクなので、今のまま続ける"]},{"id":"s07","icon":"moon","tag":"時間外","title":"夜に、不安の強い連絡が続く","text":"公式LINEや会社の番号に、利用者さんから夜間に不安の強い連絡が続いています。命の危険が迫っているとまでは言えませんが、このまま個別に応じ続けると、頼りきりのやり取りになりそうです。","opts":["そのたびにすぐ返信し、安心してもらう","緊急かどうかを整理し、決まりに沿って対応できる範囲を伝え、必要ならチームに共有する","既読にする・電話に出るだけにして、翌営業日に対応する","返信はするが、ほかのスタッフには共有しない"]},{"id":"s08","icon":"person","tag":"チーム","title":"「○○さんじゃないとだめ」","text":"利用者さんが「○○さんだけに返信してほしい」「ほかのスタッフではだめ」と求めています。電話や公式LINEでも、特定のスタッフに頼る気持ちが強まっています。","opts":["そのスタッフが中心になって対応し、安心感を優先する","チームでの対応に戻し、関わりをそろえる方向で共有する","その場は受け流し、記録だけ残す","ほかのスタッフには伝えず、そのスタッフが対応を続ける"]},{"id":"s09","icon":"heart","tag":"関わり","title":"寄り添うほど、止まってしまう","text":"生活の課題を抱えた利用者さんの気持ちに寄り添い続けるうちに、結果として本人の課題が動かなくなっているかもしれません。","opts":["まず関係を保つことを優先し、今の寄り添いを続ける","寄り添う意味は保ちつつ、取り組む課題と役割分担をはっきりさせる","利用者さんが変わらないなら、距離を置く","寄り添いが害になっていると考え、すぐに厳しく方向を直す"]},{"id":"s10","icon":"pulse","tag":"リスク","title":"「死にたくはない」。でも生活が崩れている","text":"利用者さんは死にたい気持ちを否定しています。ただ、薬が止まり、昼夜が逆転し、人とのつながりもほとんどなくなっています。","opts":["本人が否定しているので、様子を見る","気になる点を整理し、上長や主治医などに早めにつなぐ","本人が決めることを尊重し、次の訪問で詳しく聞く","薬を飲むよう強く勧め、その場で約束してもらう"]},{"id":"s11","icon":"phone","tag":"時間外","title":"夜中の「今すぐ来て」","text":"あなたはオンコールの当番です。夜中に利用者さんから「今すぐ来て」と電話がありました。","opts":["電話で状況を整理し、原則は出動しないことを説明する。必要なら上長に相談する","出動して、落ち着くまでそばにいる","警察や救急にそのまま任せる","いったん電話を切り、翌朝に対応する"]},{"id":"s12","icon":"split","tag":"チーム","title":"ほかのスタッフの悪口に、同意を求められる","text":"利用者さんから「あのスタッフはダメだ」と言われ、同意を求められました。","opts":["同意して、信頼を得る","事実の確認にとどめ、チームの方針に戻して共有する","そのスタッフをかばい、利用者さんをたしなめる","その場はあいまいに流して終える"]},{"id":"s13","icon":"shield","tag":"境界線","title":"性的な発言をされた","text":"利用者さんから性的な発言があり、あなたは不快に感じました。","opts":["その場は笑って受け流し、事務所に戻ってから報告する","線引きをはっきり示し、チームに共有して対応をそろえる","不快だと本人に伝え、その日は早めに訪問を切り上げる","がまんして話題を変え、誰にも共有しない"]},{"id":"s14","icon":"home","tag":"ご家族","title":"本人と親の希望が違う","text":"学校に行けていない10代の利用者さん。本人は「今は家でゆっくりしたい」と話しますが、親御さんからは「なんとか学校に行くよう説得してほしい」と強く頼まれました。","opts":["親御さんの不安に応え、学校に行く良さを本人に伝える","本人の気持ちを優先し、親御さんに「今は休ませましょう」と伝える","本人と親御さん、それぞれの思いを聴き、事務所に持ち帰ってチームで方針を考える","訪問看護の役割ではないと伝え、学校の先生に任せる"]}],"reflect":[{"id":"r03","icon":"car","text":"予定が崩れて焦り、運転に影響しそうになった"},{"id":"r04","icon":"phone","text":"運転中（信号待ちなどを含む）に、スマートフォンを見たり操作したりしそうになった"},{"id":"r05","icon":"car","text":"駐車や運転で、ヒヤリとした"},{"id":"r06","icon":"pulse","text":"仕事中に強い怒りや不快感が生じ、言動や判断に影響しそうになった"},{"id":"r07","icon":"moon","text":"営業時間外の相談や、事業所で決めた範囲を超える相談・連絡に、どう対応するか迷った"},{"id":"r08","icon":"shield","text":"利用者さんやご家族との関係で、線引きの保ち方に迷った"},{"id":"r09","icon":"heart","text":"利用者さんとの距離が近くなりすぎた、または近くなりすぎそうだと感じた"}],"essays":[{"id":"e5","pickScene":true,"q":"11の場面のうち、いちばん迷った場面を1つ選び、迷った理由と、最後にどう決めたかを書いてください。","max":300,"ph":"例）場面4。すぐ返信して安心してもらいたい気持ちと、頼りきりにさせない決まりのあいだで迷った。最後は、ひとりで抱えないことを優先した。"},{"id":"e1","q":"公式LINEや会社の電話で相談を受けるとき、いちばん気をつけるべきことは何だと思いますか。","max":400,"ph":"例）返事の早さよりも、決まった範囲の中で、誰が受けても同じ対応になるようにすること。"},{"id":"e4","q":"次の事例を読んで、あなたならどう考え、どう動くかを書いてください。","max":600,"caseText":"利用者さんが、公式LINEや電話で、特定のスタッフあてに何度も連絡してきます。内容は不安の訴えが中心で、今すぐ命の危険が高いとは言えませんが、返信が遅いと「見捨てられた」と感じやすい方です。ほかのスタッフが関わるのを拒む様子があり、ご家族もそのスタッフの対応に頼りがちです。利用者さんは「あなたじゃないと話したくない」と話しています。","ph":"形は自由です（箇条書きや SOAP でも構いません）。200字ほどで十分です。"},{"id":"e6","q":"なぜ訪問看護で、なぜはるうたで働きたいと思いましたか。","max":400,"ph":"はるうたのホームページで目に留まったことや、これまでの経験から思うことなど、自由にどうぞ。"},{"id":"e7","optional":true,"q":"子どもや若い方と関わった経験があれば、そのときに気をつけていたことを教えてください（仕事以外でも構いません）。","max":400,"ph":""}],"promises":[{"id":"p01","text":"利用者さんやご家族と、金銭のやり取りをしない"},{"id":"p02","text":"利用者さんへの対応は、事業所が決めた連絡手段（会社の番号・公式LINEなど）と対応の決まりに沿って行う"},{"id":"p03","text":"個人情報の漏えいは、重大なこととして扱う"},{"id":"p04","text":"飲酒運転など、法令に反することをしない"},{"id":"p05","text":"暴言・暴力・威圧的な言動をしない"},{"id":"p06","text":"うその報告や、医療事故を隠すことをしない"},{"id":"p07","text":"記録の改ざんや、事実と違う記載をしない"},{"id":"p08","text":"SNSに、利用者さんが特定されるおそれのある投稿をしない"},{"id":"p09","text":"事故やヒヤリハットは速やかに報告し、再発防止に加わる"},{"id":"p10","text":"入職してしばらくは職場の文化を知ることを優先し、提案は手順を踏んで行う"}]};
+  var NAMES = ['あなたについて', '大切にしていること', '場面で考える', 'ふり返り', 'ことばで', 'お約束'];
+  var MINUTES = [2, 3, 7, 2, 7, 1];
+  var LET = ['A', 'B', 'C', 'D'];
+  var KEY = 'haruuta_tekisei_draft_v2', OLD_KEYS = ['haruuta_tekisei_draft_v1'];
+  var f = document.getElementById('f');
+  var cur = 1, sent = false, sceneIdx = 0, mode = 'best';
+  var st = { values: {}, scenes: {}, promises: [] };
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var newId = function () { var a = new Uint8Array(12); (window.crypto || window.msCrypto).getRandomValues(a); return Array.prototype.map.call(a, function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); };
+  // 送信番号は、送れたと分かるまで（または「最初から」まで）同じものを使う。返事が届かず開き直しても二重にならないように（猪八戒 11/12）
+  var REQ_KEY = 'haruuta_tekisei_req_v1';
+  var requestId = (function () { try { var r = localStorage.getItem(REQ_KEY); if (/^[a-f0-9]{24}$/.test(r || '')) return r; r = newId(); localStorage.setItem(REQ_KEY, r); return r; } catch (e) { return newId(); } })();
+  var getTicket = function () { return fetch(POST_URL + '?type=form', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (x) { if (x && x.ok) TICKET = x.ticket; }).catch(function () {}); };
+  getTicket();
+  var newRequest = function () { requestId = newId(); try { localStorage.setItem(REQ_KEY, requestId); } catch (e) {} };
+  var $ = function (id) { return document.getElementById(id); };
+  var all = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+  // ---- 絵（線の絵。色は文字と同じ緑） ----
+  var P = {
+    car: '<path d="M5 16h14M6.5 16l1.4-5.2A2 2 0 0 1 9.8 9.3h4.4a2 2 0 0 1 1.9 1.5L17.5 16"/><rect x="3.5" y="13" width="17" height="5" rx="2"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="16.5" cy="18.5" r="1.6"/>',
+    mail: '<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3.8 7l8.2 6 8.2-6"/><path d="M17 3.5l3 3" stroke="#b98a3e"/>',
+    compass: '<circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+    moon: '<path d="M18.5 14.5A7 7 0 0 1 9.5 5.5a7 7 0 1 0 9 9z"/><path d="M16 4.5v3M14.5 6h3" stroke="#b98a3e"/>',
+    person: '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.4" opacity=".5"/><path d="M15.5 14.2a4.5 4.5 0 0 1 5 4.8" opacity=".5"/>',
+    heart: '<path d="M12 19.5s-7-4.3-7-9.5a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.2-7 9.5-7 9.5z"/>',
+    pulse: '<path d="M3 12h4l2-5 4 10 2-5h6"/>',
+    phone: '<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M10.5 18h3"/>',
+    split: '<circle cx="6.5" cy="8" r="2.5"/><circle cx="17.5" cy="8" r="2.5"/><path d="M3 18a3.5 3.5 0 0 1 7 0M14 18a3.5 3.5 0 0 1 7 0"/><path d="M12 5v13" stroke-dasharray="2 2.5" stroke="#b98a3e"/>',
+    shield: '<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9.5 12h5"/>',
+    home: '<path d="M4 11.5L12 5l8 6.5"/><path d="M6 10v9h12v-9"/><circle cx="10" cy="14.5" r="1.6"/><circle cx="14.5" cy="13.8" r="1.1" stroke="#b98a3e"/>',
+    team: '<circle cx="12" cy="7.5" r="2.8"/><circle cx="5.5" cy="10" r="2.2"/><circle cx="18.5" cy="10" r="2.2"/><path d="M7 19a5 5 0 0 1 10 0M2 18.5a3.5 3.5 0 0 1 5-3.1M22 18.5a3.5 3.5 0 0 0-5-3.1"/>'
+  };
+  var icon = function (k) { return '<svg viewBox="0 0 24 24" fill="none" stroke="#2f5444" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (P[k] || '') + '</svg>'; };
+
+  // ---- 部品を作る ----
+  $('see').innerHTML = [['shield', '安全', '移動や情報の扱いで、立ち止まれるか'], ['heart', '線引き', '寄り添いと距離の、ちょうどよさ'], ['team', 'チーム', 'ひとりで抱えず、そろえて動けるか']]
+    .map(function (x) { return '<div><b>' + icon(x[0]) + x[1] + '</b>' + x[2] + '</div>'; }).join('');
+  var pills = function (id, name, list) {
+    $(id).innerHTML = list.map(function (x) { return '<label><input type="radio" name="' + name + '" value="' + esc(x) + '"><span>' + esc(x) + '</span></label>'; }).join('');
+  };
+  pills('job', 'job', Q.jobs); pills('psy', 'psy', Q.psy); pills('drive', 'drive', Q.drive); pills('phone', 'phone', Q.phone);
+  $('steplist').innerHTML = NAMES.map(function (n, i) {
+    return '<li><button type="button" data-go="' + (i + 1) + '"><span class="n">' + (i + 1) + '</span><span class="t">' + n + '</span></button></li>';
+  }).join('');
+
+  // 2 大切にしていること
+  var VL = ['Aに近い', 'ややA', 'ややB', 'Bに近い'];
+  $('values').innerHTML = Q.values.map(function (v, i) {
+    return '<div class="vq" data-v="' + v.id + '" role="group" aria-label="問い' + (i + 1) + '">' +
+      '<div class="vn">Q' + (i + 1) + '</div><div class="vgrid">' +
+      '<div class="vs a"><span class="k">A</span>' + esc(v.a) + '</div>' +
+      '<div><div class="track">' + [1, 2, 3, 4].map(function (k) {
+        return '<button type="button" class="dot d' + k + '" data-val="' + k + '" aria-pressed="false" aria-label="' + VL[k - 1] + '"><i></i></button>';
+      }).join('') + '</div><div class="vlegend"><span>A</span><span>B</span></div></div>' +
+      '<div class="vs b"><span class="k">B</span>' + esc(v.b) + '</div></div></div>';
+  }).join('');
+  var paintValue = function (id) {
+    var box = document.querySelector('.vq[data-v="' + id + '"]'), k = st.values[id] || 0;
+    all('.dot', box).forEach(function (d) { d.setAttribute('aria-pressed', +d.getAttribute('data-val') === k ? 'true' : 'false'); });
+    box.querySelector('.vs.a').classList.toggle('lean', k === 1 || k === 2);
+    box.querySelector('.vs.b').classList.toggle('lean', k === 3 || k === 4);
+    box.classList.toggle('ok', !!k); if (k) box.classList.remove('bad');
+  };
+  $('values').addEventListener('click', function (e) {
+    var d = e.target.closest('.dot'); if (!d) return;
+    var id = d.closest('.vq').getAttribute('data-v'); st.values[id] = +d.getAttribute('data-val'); paintValue(id); changed();
+  });
+
+  // 3 場面で考える
+  var sceneDone = function (s) { var a = st.scenes[s.id]; return !!(a && LET.indexOf(a.best) >= 0 && LET.indexOf(a.worst) >= 0 && a.best !== a.worst); };
+  var paintDots = function () {
+    $('sdots').innerHTML = Q.scenes.map(function (s, i) {
+      return '<button type="button" data-scene="' + i + '" class="' + (sceneDone(s) ? 'done ' : '') + (i === sceneIdx ? 'cur' : '') + '" aria-label="場面' + (i + 1) + (sceneDone(s) ? '（選び終えた）' : '') + '">' + (i + 1) + '</button>';
+    }).join('');
+    var n = Q.scenes.filter(sceneDone).length;
+    $('scount').innerHTML = '<b>' + n + '</b> / ' + Q.scenes.length + ' 場面';
+  };
+  var renderScene = function () {
+    var s = Q.scenes[sceneIdx], a = st.scenes[s.id] || {};
+    $('sceneBox').innerHTML = '<div class="scene" role="group" aria-label="場面' + (sceneIdx + 1) + '">' +
+      '<div class="sbox"><div class="sicon">' + icon(s.icon) + '</div><div><span class="stag">場面 ' + (sceneIdx + 1) + '・' + esc(s.tag) + '</span>' +
+      '<div class="stitle">' + esc(s.title) + '</div><p class="stext">' + esc(s.text) + '</p></div></div>' +
+      '<div class="mode" role="group" aria-label="いま選ぶもの">' +
+      '<button type="button" class="mb" data-mode="best" aria-pressed="' + (mode === 'best') + '"><span class="mk">◎</span>いちばん良い<span class="st">' + (a.best ? '（' + a.best + '）' : '') + '</span></button>' +
+      '<button type="button" class="mw" data-mode="worst" aria-pressed="' + (mode === 'worst') + '"><span class="mk">✕</span>いちばん避けたい<span class="st">' + (a.worst ? '（' + a.worst + '）' : '') + '</span></button></div>' +
+      '<div class="opts">' + s.opts.map(function (o, i) {
+        var L = LET[i], cls = a.best === L ? ' best' : a.worst === L ? ' worst' : '';
+        var badge = a.best === L ? '◎ いちばん良い' : a.worst === L ? '✕ いちばん避けたい' : '';
+        return '<button type="button" class="op' + cls + '" data-opt="' + L + '"><span class="L">' + L + '</span><span>' + esc(o) + '</span><span class="badge">' + badge + '</span></button>';
+      }).join('') + '</div>' +
+      '<div class="snav"><button type="button" class="btn back" data-sprev' + (sceneIdx === 0 ? ' disabled' : '') + '>← 前の場面</button>' +
+      '<span class="state' + (sceneDone(s) ? ' ok' : '') + '">' + (sceneDone(s) ? '✓ 選びました' : (mode === 'best' ? 'まず「いちばん良い」を' : '次に「いちばん避けたい」を')) + '</span>' +
+      (sceneIdx < Q.scenes.length - 1 ? '<button type="button" class="btn next' + (sceneDone(s) ? '' : ' soft') + '" data-snext>次の場面 →</button>' : '<span></span>') + '</div></div>';
+    paintDots();
+  };
+  var advT = 0;
+  var goScene = function (i) {
+    clearTimeout(advT);
+    sceneIdx = Math.max(0, Math.min(Q.scenes.length - 1, i));
+    var a = st.scenes[Q.scenes[sceneIdx].id] || {}; mode = a.best && !a.worst ? 'worst' : 'best';
+    renderScene(); $('sceneBox').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  $('sdots').addEventListener('click', function (e) { var b = e.target.closest('[data-scene]'); if (b) goScene(+b.getAttribute('data-scene')); });
+  $('sceneBox').addEventListener('click', function (e) {
+    var m = e.target.closest('[data-mode]');
+    clearTimeout(advT);
+    if (m) { mode = m.getAttribute('data-mode'); renderScene(); var mb = document.querySelector('[data-mode="' + mode + '"]'); if (mb) mb.focus(); return; }
+    if (e.target.closest('[data-sprev]')) { goScene(sceneIdx - 1); return; }
+    if (e.target.closest('[data-snext]')) { goScene(sceneIdx + 1); return; }
+    var o = e.target.closest('[data-opt]'); if (!o) return;
+    var s = Q.scenes[sceneIdx], a = st.scenes[s.id] = st.scenes[s.id] || {}, L = o.getAttribute('data-opt');
+    var other = mode === 'best' ? 'worst' : 'best', wasDone = sceneDone(s);
+    if (a[other] === L) a[other] = '';            // 同じものを両方には選べない → 付け替え
+    a[mode] = a[mode] === L ? '' : L;              // もう一度押すと外れる
+    var completed = !wasDone && sceneDone(s);       // この1回で選び終えたときだけ、次の場面へ進む
+    if (a[mode] && !a[other]) mode = other;        // 片方を選んだら、もう片方へ
+    renderScene(); changed();
+    var el = document.querySelector('.op[data-opt="' + L + '"]'); if (el) { el.classList.add('pop'); el.focus({ preventScroll: true }); }
+    if (completed && sceneIdx < Q.scenes.length - 1) { var snap = a.best + a.worst; advT = setTimeout(function () { if (Q.scenes[sceneIdx] === s && sceneDone(s) && a.best + a.worst === snap) goScene(sceneIdx + 1); }, 700); }
+  });
+
+  // 4 ふり返り
+  $('reflect').innerHTML = Q.reflect.map(function (r) {
+    return '<div class="rq" data-r="' + r.id + '"><div class="ri">' + icon(r.icon) + '</div><div><p>' + esc(r.text) + '</p>' +
+      '<div class="seg" role="radiogroup" aria-label="' + esc(r.text) + '">' + Q.freq.map(function (x) {
+        return '<label><input type="radio" name="' + r.id + '" value="' + esc(x) + '"><span>' + esc(x) + '</span></label>';
+      }).join('') + '</div></div></div>';
+  }).join('');
+  var needNote = function () { return Q.reflect.some(function (r) { var v = radio(r.id); return v === Q.freq[2] || v === Q.freq[3]; }); };
+  var paintNote = function () { $('reflectNoteBox').classList.toggle('show', needNote()); };
+
+  // 5 ことばで
+  $('essays').innerHTML = Q.essays.map(function (e, i) {
+    return '<div class="eq field" data-req="' + e.id + '"><label for="' + e.id + '"><span class="en">' + (i + 1) + '</span>' + esc(e.q) + (e.optional ? '<span class="opt">任意</span>' : '<span class="req">必須</span>') + '</label>' +
+      (e.caseText ? '<div class="case"><b>CASE</b>' + esc(e.caseText) + '</div>' : '') +
+      (e.pickScene ? '<select id="' + e.id + 'Scene" name="' + e.id + 'Scene" class="spick" aria-label="迷った場面"><option value="">場面を選んでください</option>' +
+        Q.scenes.map(function (s, k) { return '<option value="' + esc(s.id) + '">場面' + (k + 1) + '　' + esc(s.title) + '</option>'; }).join('') + '</select>' : '') +
+      '<textarea id="' + e.id + '" name="' + e.id + '" maxlength="' + e.max + '" placeholder="' + esc(e.ph || '') + '"' + (e.caseText ? ' style="min-height:180px"' : '') + '></textarea>' +
+      '<div class="msg">' + (e.pickScene ? '場面を選び、20字以上で書いてください' : e.optional ? '書く場合は20字以上で' : '書いてください（20字以上）') + '</div></div>';
+  }).join('');
+
+  // 6 お約束
+  $('ptotal').textContent = Q.promises.length;
+  $('prom').innerHTML = Q.promises.map(function (p, i) {
+    return '<label class="pr" data-p="' + i + '"><input type="checkbox" name="promise" value="' + esc(p.id) + '"><span class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span>' + esc(p.text) + '</span></label>';
+  }).join('');
+  var paintProm = function () {
+    all('.pr').forEach(function (l) { l.classList.toggle('on', l.querySelector('input').checked); });
+    $('pcount').textContent = all('.pr input:checked').length;
+  };
+
+  // 文字数
+  all('textarea[maxlength]', f).forEach(function (t) {
+    var c = document.createElement('div'); c.className = 'count'; t.parentNode.insertBefore(c, t.nextSibling);
+    var up = function () { c.textContent = t.value.length + ' / ' + t.getAttribute('maxlength'); }; t.addEventListener('input', up); t._up = up; up();
+  });
+
+  // ---- 集める ----
+  var val = function (n) { var el = f.elements[n]; return el && el.value != null ? String(el.value).trim() : ''; };
+  var radio = function (n) { var x = f.querySelector('input[name="' + n + '"]:checked'); return x ? x.value : ''; };
+  var collect = function () {
+    var r = {}, e = {};
+    Q.reflect.forEach(function (x) { r[x.id] = radio(x.id); });
+    Q.essays.forEach(function (x) { e[x.id] = val(x.id); if (x.pickScene) e[x.id + 'Scene'] = val(x.id + 'Scene'); });
+    var sc = {}; Q.scenes.forEach(function (s) { var a = st.scenes[s.id] || {}; sc[s.id] = { best: a.best || '', worst: a.worst || '' }; });
+    return {
+      form: 'tekisei', version: Q.version, name: val('name'), kana: val('kana'), email: val('email'), tel: val('tel'),
+      job: radio('job'), jobOther: radio('job') === 'その他' ? val('jobOther') : '', psy: radio('psy'), drive: radio('drive'), phone: radio('phone'),
+      values: JSON.parse(JSON.stringify(st.values)), scenes: sc, reflect: r, reflectNote: needNote() ? val('reflectNote') : '',
+      essays: e, promises: all('.pr input:checked').map(function (x) { return x.value; })
+    };
+  };
+
+  // ---- 書きかけ（この端末だけ。使えなくても動く） ----
+  // 共有の端末で次の人に見せないよう、お名前・メール・電話は保存しない。開いたときに勝手に戻さず「続きから」を選んでもらう。7日で消す（猪八戒 11/12）。
+  var DRAFT_MAX_MS = 7 * 864e5, toastT, saveT, resumeAsked = false;
+  try { OLD_KEYS.forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
+  var save = function () {
+    if (sent || resumeAsked) return;
+    try {
+      var d = collect(); delete d.name; delete d.kana; delete d.email; delete d.tel; delete d.form;
+      d.v = 2; d.savedAt = Date.now(); d.reflectNoteRaw = val('reflectNote'); localStorage.setItem(KEY, JSON.stringify(d));
+    } catch (e) { return; }
+    $('clearDraft').style.display = '';
+    var s = $('saved'); s.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(function () { s.classList.remove('show'); }, 1400);
+  };
+  var changed = function () { clearTimeout(saveT); saveT = setTimeout(save, 700); paintLeft(); };
+  var setRadio = function (n, v) { all('input[name="' + n + '"]', f).forEach(function (x) { x.checked = x.value === v; }); };
+  var isObj = function (x) { return !!x && typeof x === 'object' && !Array.isArray(x); };
+  var str = function (x) { return typeof x === 'string' ? x : ''; };
+  var readDraft = function () {
+    var d; try { d = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { d = null; }
+    if (!isObj(d) || d.v !== 2 || !(Date.now() - (+d.savedAt || 0) < DRAFT_MAX_MS)) { try { localStorage.removeItem(KEY); } catch (e) {} return null; }
+    return d;
+  };
+  var applyDraft = function (d) {
+    if (str(d.jobOther)) f.elements.jobOther.value = d.jobOther;
+    ['job', 'psy', 'drive', 'phone'].forEach(function (k) { if (str(d[k])) setRadio(k, d[k]); });
+    var vs = isObj(d.values) ? d.values : {}, sc = isObj(d.scenes) ? d.scenes : {}, rf = isObj(d.reflect) ? d.reflect : {}, es = isObj(d.essays) ? d.essays : {};
+    Q.values.forEach(function (v) { var k = +vs[v.id]; if (k >= 1 && k <= 4) st.values[v.id] = k; });
+    Q.scenes.forEach(function (s) {
+      var a = isObj(sc[s.id]) ? sc[s.id] : {}, b = LET.indexOf(a.best) >= 0 ? a.best : '', w = LET.indexOf(a.worst) >= 0 && a.worst !== b ? a.worst : '';
+      if (b || w) st.scenes[s.id] = { best: b, worst: w };
+    });
+    Q.reflect.forEach(function (r) { if (str(rf[r.id])) setRadio(r.id, rf[r.id]); });
+    if (str(d.reflectNoteRaw)) f.elements.reflectNote.value = d.reflectNoteRaw;
+    Q.essays.forEach(function (x) {
+      if (str(es[x.id])) f.elements[x.id].value = es[x.id];
+      if (x.pickScene && Q.scenes.some(function (s) { return s.id === es[x.id + 'Scene']; })) f.elements[x.id + 'Scene'].value = es[x.id + 'Scene'];
+    });
+    var pr = Array.isArray(d.promises) ? d.promises : [];
+    all('.pr input').forEach(function (x) { x.checked = pr.indexOf(x.value) >= 0; });
+    var i = -1; Q.scenes.some(function (s, k) { if (!sceneDone(s)) { i = k; return true; } return false; }); sceneIdx = i < 0 ? 0 : i;
+  };
+  var resetAll = function () {
+    clearTimeout(saveT); try { localStorage.removeItem(KEY); } catch (e) {}
+    newRequest();
+    f.reset(); st = { values: {}, scenes: {}, promises: [] }; sceneIdx = 0; mode = 'best';
+    $('clearDraft').style.display = 'none'; paintAll();
+  };
+  var offerResume = function () {
+    var d = readDraft(); if (!d) return;
+    resumeAsked = true;
+    var t = new Date(+d.savedAt);
+    $('resumeText').textContent = 'この端末に、' + (t.getMonth() + 1) + '月' + t.getDate() + '日の書きかけがあります（お名前・連絡先は保存していません）。';
+    $('resume').hidden = false;
+    $('resumeGo').onclick = function () {
+      try { applyDraft(d); } catch (e) { resetAll(); }
+      resumeAsked = false; $('resume').hidden = true; $('clearDraft').style.display = ''; paintAll(); paintLeft(); $('name').focus();
+    };
+    $('resumeNo').onclick = function () { resumeAsked = false; $('resume').hidden = true; resetAll(); paintLeft(); };
+  };
+  var paintAll = function () {
+    Q.values.forEach(function (v) { paintValue(v.id); }); renderScene(); paintNote(); paintProm(); paintJob();
+    all('textarea', f).forEach(function (t) { if (t._up) t._up(); });
+  };
+  var paintJob = function () { $('jobOther').style.display = radio('job') === 'その他' ? '' : 'none'; };
+  $('clearDraft').addEventListener('click', function () {
+    if (!confirm('この端末に保存した書きかけを消して、最初からにします。よろしいですか？')) return;
+    $('resume').hidden = true; resumeAsked = false; resetAll(); show(1);
+  });
+  f.addEventListener('input', function (e) {
+    var box = e.target.closest && e.target.closest('[data-req]');
+    if (box && box.classList.contains('bad')) { var r = RULES[box.getAttribute('data-req')]; if (r && r(collect())) box.classList.remove('bad'); }
+    changed();
+  });
+  f.addEventListener('change', function (e) {
+    if (e.target.name === 'job') paintJob();
+    if (/^r\d+$/.test(e.target.name)) { paintNote(); var q = e.target.closest('.rq'); if (q) q.classList.remove('bad'); }
+    if (e.target.name === 'promise') paintProm();
+    changed();
+  });
+
+  // ---- 確かめ ----
+  var len = function (s) { return String(s || '').replace(/\s/g, '').length; };
+  var RULES = {
+    name: function (d) { return !!d.name; }, kana: function (d) { return !!d.kana; },
+    email: function (d) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email); },
+    tel: function (d) { var n = d.tel.replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }); return /^[0-9\-－ー()（）+ ]+$/.test(n) && /^0\d{9,10}$/.test(n.replace(/\D/g, '')); },
+    job: function (d) { return !!d.job && (d.job !== 'その他' || !!d.jobOther); },
+    psy: function (d) { return !!d.psy; }, drive: function (d) { return !!d.drive; }, phone: function (d) { return !!d.phone; },
+    reflectNote: function (d) { return !needNote() || len(d.reflectNote) >= 30; },
+    promises: function (d) { return d.promises.length === Q.promises.length; }
+  };
+  Q.essays.forEach(function (x) { RULES[x.id] = function (d) { var n = len(d.essays[x.id]); if (x.pickScene && !d.essays[x.id + 'Scene']) return false; return x.optional ? (n === 0 || n >= 20) : n >= 20; }; });
+  var check = function (step, quiet) {
+    var d = collect(), ok = true, first = null;
+    var mark = function (box, good) {
+      if (!quiet) { box.classList.toggle('bad', !good); all('input:not([type=radio]):not([type=checkbox]),textarea', box).forEach(function (i) { if (good) i.removeAttribute('aria-invalid'); else i.setAttribute('aria-invalid', 'true'); }); }
+      if (!good) { ok = false; if (!first) first = box; }
+    };
+    all('.screen[data-step="' + step + '"] [data-req]').forEach(function (box) { var r = RULES[box.getAttribute('data-req')]; if (r) mark(box, r(d)); });
+    if (step === 2) { Q.values.forEach(function (v) { mark(document.querySelector('.vq[data-v="' + v.id + '"]'), !!st.values[v.id]); }); if (!quiet) $('valuesMsg').style.display = ok ? 'none' : 'block'; }
+    if (step === 3) {
+      var miss = Q.scenes.map(sceneDone).indexOf(false);
+      if (miss >= 0) { ok = false; if (!quiet) { $('scenesMsg').style.display = 'block'; goScene(miss); } } else if (!quiet) $('scenesMsg').style.display = 'none';
+      return ok;
+    }
+    if (step === 4) Q.reflect.forEach(function (r) { mark(document.querySelector('.rq[data-r="' + r.id + '"]'), !!d.reflect[r.id]); });
+    if (!ok && !quiet) { $('sr').textContent = ''; setTimeout(function () { $('sr').textContent = step === 3 ? 'まだ選び終えていない場面があります' : 'まだ答えていない問いがあります。赤い印のところを確かめてください'; }, 50); }
+    if (first && !quiet) { first.scrollIntoView({ behavior: 'smooth', block: 'center' }); var i = first.querySelector('input,textarea,button'); if (i) i.focus({ preventScroll: true }); }
+    return ok;
+  };
+
+  // ---- 残り時間のめやす ----
+  var paintLeft = function () {
+    if (cur > 6) { $('left').textContent = ''; return; }
+    var m = 0; for (var s = cur; s <= 6; s++) m += check(s, true) ? 0 : MINUTES[s - 1];
+    $('left').textContent = m ? 'のこり およそ ' + m + ' 分' : 'あとは確認して送るだけです';
+  };
+
+  // ---- 画面の切り替え ----
+  var show = function (n) {
+    cur = n;
+    all('.screen').forEach(function (s) { s.classList.toggle('on', +s.getAttribute('data-step') === n); });
+    all('#steplist button').forEach(function (b) { var k = +b.getAttribute('data-go'); b.classList.toggle('on', k === n); b.classList.toggle('done', k < n); });
+    $('bar').style.width = Math.min(100, (n - 1) / 6 * 100) + '%';
+    if (n === 3) renderScene();
+    if (n === 7) renderSum();
+    document.querySelector('.steps').style.display = n === 8 ? 'none' : '';
+    paintLeft();
+    window.scrollTo({ top: n === 1 ? 0 : document.querySelector('main').offsetTop - 80, behavior: 'smooth' });
+    var hd = document.querySelector('.screen.on h2'); if (hd && n !== 1) hd.focus({ preventScroll: true });
+  };
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-go]'); if (!b || sent) return;
+    var g = b.getAttribute('data-go'), n = g === '+1' ? cur + 1 : g === '-1' ? cur - 1 : +g;
+    if (n > cur) { for (var s = cur; s < n; s++) { if (!check(s)) { if (s !== cur) { show(s); setTimeout(function () { check(cur); }, 400); } return; } } }
+    show(Math.max(1, Math.min(7, n)));
+  });
+
+  // ---- 送る前の確認 ----
+  var renderSum = function () {
+    var d = collect();
+    var rows = function (list) { return '<dl>' + list.map(function (r) { return '<dt>' + r[0] + '</dt><dd' + (r[1] ? '' : ' class="none"') + '>' + esc(r[1] || '（なし）') + '</dd>'; }).join('') + '</dl>'; };
+    var h = function (n, t) { return '<h3>' + t + '<button type="button" data-go="' + n + '">直す</button></h3>'; };
+    $('sum').innerHTML =
+      h(1, 'あなたについて') + rows([['お名前', d.name + (d.kana ? '（' + d.kana + '）' : '')], ['メール', d.email], ['電話', d.tel],
+        ['職種', d.job === 'その他' ? 'その他（' + d.jobOther + '）' : d.job], ['精神科の経験', d.psy], ['運転', d.drive], ['電話対応', d.phone]]) +
+      h(2, '大切にしていること') + '<div class="mini">' + Q.values.map(function (v, i) { return '<span>Q' + (i + 1) + '　<i>' + VL[(d.values[v.id] || 1) - 1] + '</i></span>'; }).join('') + '</div>' +
+      h(3, '場面で考える') + '<div class="mini">' + Q.scenes.map(function (s, i) { var a = d.scenes[s.id]; return '<span>場面' + (i + 1) + '　<i class="g">◎' + a.best + '</i>　<i class="w">✕' + a.worst + '</i></span>'; }).join('') + '</div>' +
+      h(4, 'ふり返り') + rows(Q.reflect.map(function (r, i) { return ['問い' + (i + 1), d.reflect[r.id]]; }).concat(d.reflectNote ? [['状況と工夫', d.reflectNote]] : [])) +
+      h(5, 'ことばで') + rows(Q.essays.map(function (x, i) {
+        var pre = ''; if (x.pickScene) { var k = -1; Q.scenes.some(function (s, j) { if (s.id === d.essays[x.id + 'Scene']) { k = j; return true; } return false; }); pre = k >= 0 ? '（場面' + (k + 1) + '）' : ''; }
+        return ['問い' + (i + 1), d.essays[x.id] ? pre + d.essays[x.id] : '']; })) +
+      h(6, 'お約束') + rows([['同意', d.promises.length + ' / ' + Q.promises.length]]);
+  };
+
+  // ---- 送信 ----
+  var btn = $('send'), errs = $('errs');
+  btn.addEventListener('click', function () {
+    var agreeBox = document.querySelector('[data-req="agree"]'), ag = $('agree').checked;
+    agreeBox.classList.toggle('bad', !ag); if (!ag) return;
+    for (var s = 1; s <= 6; s++) { if (!check(s, true)) { show(s); setTimeout(function () { check(cur); }, 400); return; } }
+    var data = collect(); data.agree = true; data.ticket = TICKET; data.requestId = requestId; data.website = val('website');
+    btn.disabled = true; btn.textContent = '送信しています…'; errs.style.display = 'none';
+    (TICKET ? Promise.resolve() : getTicket()).then(function () { data.ticket = TICKET; return fetch(POST_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) }); })
+      .then(function (r) { return r.json(); })
+      .then(function (x) {
+        if (x && x.ok) { sent = true; try { localStorage.removeItem(KEY); localStorage.removeItem(REQ_KEY); } catch (e) {} show(8); return; }
+        errs.innerHTML = esc(((x && x.errors) || ['送信できませんでした']).join('\n')).replace(/\n/g, '<br>'); errs.style.display = 'block';
+      })
+      .catch(function () {
+        errs.innerHTML = '通信がうまくいきませんでした。少し待ってもう一度押すか、お電話（092-410-6392）でご連絡ください。<br>入力した内容は、この画面にそのまま残っています。'; errs.style.display = 'block';
+      })
+      .then(function () { if (!sent) { btn.disabled = false; btn.textContent = 'この内容で送信する'; } });
+  });
+
+  $('copytel').addEventListener('click', function () {
+    var b = this, done = function () { b.textContent = 'コピーしました'; setTimeout(function () { b.textContent = '番号をコピー'; }, 1600); };
+    try { navigator.clipboard.writeText('092-410-6392').then(done, done); } catch (e) { done(); }
+  });
+
+  paintAll(); show(1); offerResume();
+})();
+</script>
+</body>
+</html>
